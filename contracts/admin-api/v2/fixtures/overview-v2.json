@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": 1787652000000,
+  "relay": { "health": "healthy", "version": "0.6.0-rc.1", "uptimeSeconds": 3600, "lastCheckAt": 1787652000000 },
+  "wechat": { "state": "ready", "accountHint": "wx:0123456789ab", "lastPollAt": 1787651999000, "lastContextAt": 1787651998000, "lastProviderAcceptedAt": 1787651997000, "queue": { "pending": 0, "sending": 0, "retrying": 0, "blocked": 0, "failed": 0 }, "lastErrorCode": null },
+  "devices": { "enabledTotal": 1, "onlineTotal": 1, "recentlyOfflineTotal": 0, "states": { "online": 1, "offline": 0, "disabled": 0, "revoked": 0, "unknown": 0 } },
+  "queue": { "pending": 0, "sending": 0, "retrying": 0, "blocked": 0, "failed": 0 },
+  "gatewayConnections": [{ "deviceId": "00000000-0000-4000-8000-000000000001", "deviceName": "operator-workstation", "generation": 7, "connected": true, "lastHeartbeatAt": 1787651999000, "clientVersion": "promptdock/0.2.0" }],
+  "currentAlerts": []
+}

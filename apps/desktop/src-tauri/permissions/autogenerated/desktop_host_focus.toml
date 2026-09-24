@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-desktop-host-focus"
+description = "Enables the desktop_host_focus command without any pre-configured scope."
+commands.allow = ["desktop_host_focus"]
+
+[[permission]]
+identifier = "deny-desktop-host-focus"
+description = "Denies the desktop_host_focus command without any pre-configured scope."
+commands.deny = ["desktop_host_focus"]

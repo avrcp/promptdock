@@ -1,0 +1,7 @@
+{
+  "loginId": "00000000-0000-4000-8000-000000000001",
+  "state": "waiting_scan",
+  "qrContent": "contract-qr-content",
+  "expiresAt": 1800000300000,
+  "canSubmitVerifyCode": false
+}

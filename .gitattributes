@@ -1,0 +1,43 @@
+* text=auto eol=lf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.pdf binary
+*.exe binary
+*.dll binary
+*.dylib binary
+*.so binary
+*.sqlite binary
+*.db binary
+
+# Text sources — never normalize or diff as binary
+*.rs text
+*.ts text
+*.tsx text
+*.vue text
+*.js text
+*.mjs text
+*.cjs text
+*.json text
+*.toml text
+*.yaml text
+*.yml text
+*.md text
+*.sql text
+*.ps1 text eol=crlf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.sh text eol=lf
+
+# Lockfiles: skip in diffs
+pnpm-lock.yaml -diff linguist-generated=true
+Cargo.lock -diff linguist-generated=true

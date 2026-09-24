@@ -1,0 +1,83 @@
+# The Windows desktop host: its web layer and its workspace-excluded Tauri crate.
+#
+# Kept separate from ci-relay.yml on purpose. The desktop crate is not a member of
+# the root Cargo workspace (`apps/desktop/src-tauri` is excluded in Cargo.toml), so
+# the relay job's `cargo test --workspace` never compiles it. Without this file the
+# 466 desktop Rust tests and the desktop TypeScript would be unrun by anything
+# automated.
+#
+# The gate list is the root `quality:desktop` script, so `pnpm quality:desktop` on a
+# Windows workstation and this job do the same work.
+
+name: desktop
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - 'apps/desktop/**'
+      - 'contracts/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - 'rust-toolchain.toml'
+      - '.node-version'
+      - '.github/workflows/ci-desktop.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desktop-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  windows:
+    name: Web layer and Tauri crate
+    runs-on: windows-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # No `cache: pnpm`: setup-node needs a pnpm binary to resolve the store
+          # path while it is still running, and that binary is only created by
+          # `corepack enable` below.
+          node-version-file: .node-version
+
+      - name: Enable corepack
+        run: corepack enable
+
+      # Resolving the dependency graph is the pnpm part of the job; the crate then
+      # builds with MSVC and the WebView2 runtime that the image already carries.
+      - name: Install Rust toolchain pinned by rust-toolchain.toml
+        run: rustup show
+
+      - name: Install workspace
+        run: corepack pnpm@11.10.0 install --frozen-lockfile
+
+      # Vitest + ESLint + vue-tsc + the design-token gate + the HTTP v1 contract
+      # check, then cargo fmt / clippy -D warnings / test against
+      # apps/desktop/src-tauri. See the root package.json script for the exact list.
+      - name: Run the desktop quality aggregate
+        run: corepack pnpm@11.10.0 quality:desktop
+
+      - name: Version contract
+        # Compares apps/desktop/package.json, src-tauri/Cargo.toml and
+        # tauri.conf.json, and on a tag push requires the tag to match them.
+        shell: pwsh
+        run: ./apps/desktop/packaging/verify-versions.ps1
+
+  # The exe itself is deliberately not produced here: `tauri build` adds a release
+  # compile to every pull request, and docs/development/testing.md records the
+  # bundling and startup smoke as the manual release step. Run locally with
+  # `pnpm tauri:build` and then apps/desktop/packaging/smoke-desktop-startup.ps1.

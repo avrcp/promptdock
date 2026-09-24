@@ -1,0 +1,82 @@
+@keyframes pd-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pd-drawer-in {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pd-drawer-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+}
+
+@keyframes pd-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes pd-skeleton-pulse {
+  from {
+    opacity: 0.58;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.pd-reveal {
+  animation: pd-reveal var(--pd-transition-reveal);
+}
+
+.pd-spin {
+  animation: pd-spin 700ms linear infinite;
+}
+
+.pd-drawer-enter-active {
+  animation: pd-drawer-in var(--pd-transition-reveal);
+}
+
+.pd-drawer-leave-active {
+  animation: pd-drawer-out var(--pd-transition-normal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pd-spin {
+    animation: none;
+  }
+}
+
+/* ── Press feedback — only when user has no motion preference ─────── */
+@media (prefers-reduced-motion: no-preference) {
+  .app-button:active:not(:disabled),
+  .app-icon-button:active:not(:disabled),
+  .app-menu__trigger:active {
+    transform: translateY(1px);
+  }
+}

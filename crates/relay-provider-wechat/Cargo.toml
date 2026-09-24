@@ -1,0 +1,14 @@
+[package]
+name = "relay-provider-wechat"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+license.workspace = true
+publish = false
+
+[lints]
+workspace = true
+
+[dependencies]
+wechat-ilink = { path = "../wechat-ilink" }

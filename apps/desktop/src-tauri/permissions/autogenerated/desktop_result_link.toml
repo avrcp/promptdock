@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-desktop-result-link"
+description = "Enables the desktop_result_link command without any pre-configured scope."
+commands.allow = ["desktop_result_link"]
+
+[[permission]]
+identifier = "deny-desktop-result-link"
+description = "Denies the desktop_result_link command without any pre-configured scope."
+commands.deny = ["desktop_result_link"]

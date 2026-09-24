@@ -1,0 +1,9 @@
+{
+  "items": [
+    { "id": "delivery_admin0123456789", "origin": "admin", "originLabel": "admin", "kind": "test", "state": "queued", "priority": 100, "attemptCount": 0, "errorCode": null, "createdAt": 1787652000000, "updatedAt": 1787652000000 },
+    { "id": "delivery_0123456789abcdef", "origin": "device", "originLabel": "device:0123456789ab", "kind": "run_event", "state": "accepted", "priority": 128, "attemptCount": 1, "errorCode": null, "createdAt": 1787651900000, "updatedAt": 1787651990000 }
+  ],
+  "nextCursor": null,
+  "total": null,
+  "generatedAt": 1787652000000
+}

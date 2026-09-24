@@ -1,0 +1,12 @@
+{
+  "type": "response",
+  "requestId": "00000000-0000-4000-8000-00000000000e",
+  "generation": 3,
+  "result": {
+    "kind": "cancel_run",
+    "accepted": true,
+    "runHandle": "run_8f5d8b82c9124e12b7d9aabbccdd",
+    "desiredState": "stopped",
+    "phase": "stopping"
+  }
+}

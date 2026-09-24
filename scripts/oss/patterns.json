@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json.schemastore.org/base.json",
+  "description": "Public-tree forbidden-pattern and secret-shape database for scripts/oss/check-public-tree.mjs. It contains only generic, non-sensitive path and content shapes: the forms a repository must never carry, independent of any one project's infrastructure. Exact environment-specific identifiers are deliberately not stored in this repository, in plaintext or in any encoded form - base64 is a reversible encoding, not a redaction, and the scanner rejects encoded pattern fields outright. Per-deployment baselines are validated during private release preparation, outside the tree. Exceptions are precise per-pattern path allowlists only - there is no global ignore and no self-exemption: this file and the scanner are scanned like every other file.",
+  "allowlistPolicy": "Every allow entry is a file that has to contain a live-shaped value in order to prove something about itself: the notification redactors and their tests (private-key / AWS / OpenAI / bearer shapes), the frozen Admin device-receipt fixtures and the relay clients that verify them (PromptDock token shape), the generated pnpm lockfile (upstream registry metadata we do not author), and the desktop path-handling tests that pass a synthetic absolute path through the code under test. An allowlist for one detector never disables the other detectors for that file. Where a generic detector needs an exception, the narrowest possible one is used - never a whole detector class or directory.",
+  "skipDirectories": [
+    "target",
+    "node_modules",
+    "dist",
+    ".git",
+    ".pnpm-store"
+  ],
+  "binaryExtensions": [
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".gif",
+    ".webp",
+    ".ico",
+    ".svgz",
+    ".woff",
+    ".woff2",
+    ".ttf",
+    ".otf",
+    ".eot",
+    ".zip",
+    ".gz",
+    ".tar",
+    ".xz",
+    ".7z",
+    ".pdf",
+    ".exe",
+    ".dll",
+    ".lib",
+    ".rlib",
+    ".rmeta",
+    ".pdb",
+    ".so",
+    ".dylib",
+    ".msi",
+    ".wasm",
+    ".map",
+    ".lock",
+    ".png.js",
+    ".mp4",
+    ".mp3",
+    ".class",
+    ".jar",
+    ".o",
+    ".a",
+    ".bin"
+  ],
+  "maxFileBytes": 4194304,
+  "pathPatterns": [
+    {
+      "id": "private-audit-dir",
+      "regex": "(^|/)(\\.private-audit|audit)(/|$)",
+      "description": "A working directory for audit or extraction evidence must not be published."
+    },
+    {
+      "id": "stitch-internal",
+      "regex": "(^|/)\\.stitch(/|$)",
+      "description": "Pre-design comparison assets are not published."
+    },
+    {
+      "id": "acceptance-dir",
+      "regex": "(^|/)acceptance(/|$)",
+      "description": "A dated acceptance and evidence directory is not published."
+    },
+    {
+      "id": "docs-archive",
+      "regex": "(^|/)docs/archive(/|$)",
+      "description": "Superseded internal archive docs are not published."
+    },
+    {
+      "id": "docs-evidence",
+      "regex": "(^|/)docs/evidence(/|$)",
+      "description": "Internal evidence docs are not published."
+    },
+    {
+      "id": "credential-file",
+      "regex": "\\.(pem|key|pfx|p12|dpapi|enc)$",
+      "description": "Private key, keystore or DPAPI-encrypted credential material."
+    },
+    {
+      "id": "ssh-private-key-file",
+      "regex": "(^|/)id_(rsa|dsa|ecdsa|ed25519)$",
+      "description": "OpenSSH private key."
+    },
+    {
+      "id": "credential-store-dir",
+      "regex": "(^|/)(\\.secrets|\\.dev)(/|$)",
+      "description": "A directory named for secret storage is never published, whatever it holds."
+    },
+    {
+      "id": "database-file",
+      "regex": "\\.(sqlite|sqlite3|db|db-wal|db-shm|db-journal)$",
+      "description": "Runtime database file: real schema and user data, never source."
+    },
+    {
+      "id": "run-log-file",
+      "regex": "\\.(log|trace)$",
+      "description": "Captured run log or trace: evidence that can carry request/response data."
+    },
+    {
+      "id": "dot-env-file",
+      "regex": "(^|/)\\.env(?!\\.example)($|\\.)",
+      "description": "Environment file with live values; only .env.example may be tracked."
+    }
+  ],
+  "contentPatterns": [
+    {
+      "id": "personal-absolute-path",
+      "regex": "[A-Za-z]:[/\\\\]{1,2}(users|home|workspace|work|projects?|dev|src)[/\\\\]",
+      "flags": "i",
+      "description": "An absolute path rooted in a developer machine layout: a personal home, workspace or project directory.",
+      "note": "Shape-based, so it names no machine. Every one of the 15 lines it reported on first run was triaged: each holds a placeholder account name (example, test, someone, a CJK probe name) inside a fixture whose purpose is to be handed an absolute path. Those eight files are allowed by name; the detector stays on for the other 772.",
+      "allow": [
+        "apps/desktop/scripts/dev/mock-tauri.ts",
+        "apps/desktop/src/App.test.ts",
+        "apps/desktop/src-tauri/src/adapters/codex/hooks.rs",
+        "apps/desktop/src-tauri/src/desktop_app.rs",
+        "apps/desktop/src-tauri/src/desktop_startup.rs",
+        "apps/desktop/src-tauri/src/notification/content_builder.rs",
+        "apps/desktop/src-tauri/tests/agent_event_capture_process.rs",
+        "apps/desktop/src-tauri/tests/hook_installation.rs"
+      ]
+    },
+    {
+      "id": "personal-home-path",
+      "regex": "(?<![\\w.])/(?:home|users)/[^/\\s\"']+/(?:\\.(?:ssh|aws|gnupg|config)|desktop|downloads|workspace|projects?)(?![\\w-])",
+      "flags": "i",
+      "description": "A per-user home directory path on a unix or macOS workstation, not a service account path a deployment would ship.",
+      "allow": []
+    },
+    {
+      "id": "routable-ipv4-literal",
+      "regex": "(?<![\\w.])(?!(?:0|10|127|255)\\.|169\\.254\\.|172\\.(?:1[6-9]|2[0-9]|3[01])\\.|100\\.(?:6[4-9]|[7-9][0-9]|1[01][0-9]|12[0-7])\\.|192\\.(?:0\\.2|88\\.99|168)\\.|198\\.(?:1[89]|51\\.100)\\.|203\\.0\\.113\\.)(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(?:\\.(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}(?!\\d)(?!\\.\\d)",
+      "flags": "",
+      "description": "A bare IPv4 literal outside the loopback, private, link-local, shared, benchmarking and documentation ranges - a deployment address rather than an example.",
+      "note": "The guards carry the meaning and each has a case in scripts/oss/selftest-check-public-tree.mjs: the leading class rejects a letter or dot in front, so a tagged version reads as a version; the trailing pair rejects a further digit or a further octet, so 1.2.3.4.5 is a version while an address that ends a sentence is still an address.",
+      "allow": []
+    },
+    {
+      "id": "pii-cn-mobile",
+      "regex": "\\b1[3-9][0-9]{9}\\b",
+      "flags": "",
+      "description": "Mainland-China mobile number shape.",
+      "allow": []
+    },
+    {
+      "id": "pii-non-placeholder-email",
+      "regex": "[A-Za-z0-9._%+-]+@(?!.*(?:example|\\.test\\b|im\\.wechat|im\\.bot|db\\.internal|localhost|\\.local|schemas|w3\\.org|weixin\\.qq\\.com))[A-Za-z0-9.-]+\\.[A-Za-z]{2,}",
+      "flags": "",
+      "description": "Email address that is not a reserved placeholder domain.",
+      "note": "weixin.qq.com is a public third-party service domain that appears as URL userinfo in endpoint-parsing tests, never as a person's mailbox.",
+      "allow": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "id": "secret-private-key",
+      "regex": "-----BEGIN (?:RSA |EC |OPENSSH |)PRIVATE KEY-----",
+      "flags": "",
+      "description": "PEM private key material.",
+      "allow": [
+        "apps/desktop/src-tauri/src/notification/redaction.rs"
+      ]
+    },
+    {
+      "id": "secret-aws-access-key",
+      "regex": "\\bAKIA[0-9A-Z]{16}\\b",
+      "flags": "",
+      "description": "AWS access key id.",
+      "allow": [
+        "apps/desktop/src-tauri/src/notification/redaction.rs"
+      ]
+    },
+    {
+      "id": "secret-github-token",
+      "regex": "\\bgh[pousr]_[A-Za-z0-9_]{20,}\\b",
+      "flags": "",
+      "description": "GitHub token.",
+      "allow": []
+    },
+    {
+      "id": "secret-openai-key",
+      "regex": "\\bsk-[A-Za-z0-9_-]{20,}\\b",
+      "flags": "",
+      "description": "OpenAI-style secret key.",
+      "allow": [
+        "apps/desktop/src-tauri/src/notification/redaction.rs",
+        "apps/desktop/src-tauri/src/notification/mod.rs"
+      ]
+    },
+    {
+      "id": "secret-promptdock-token-shape",
+      "regex": "(^|[^A-Za-z0-9_-])pdv2\\.[A-Za-z0-9._-]{8,}",
+      "flags": "",
+      "description": "Live-shape PromptDock one-time / device token (contains_live_device_token).",
+      "allow": [
+        "contracts/admin-api/v2/fixtures/device-create-receipt-v2.json",
+        "contracts/admin-api/v2/fixtures/device-rotate-receipt-v2.json",
+        "apps/server/tests/admin_api_contract_fixtures.rs",
+        "apps/server/src/gateway/tests.rs",
+        "apps/desktop/src-tauri/src/relay/credentials.rs",
+        "apps/desktop/src-tauri/src/relay/http_client.rs",
+        "apps/desktop/src-tauri/src/relay/state.rs"
+      ]
+    },
+    {
+      "id": "secret-bearer-shape",
+      "regex": "Authorization\\s*:\\s*Bearer\\s+[A-Za-z0-9._-]{8,}",
+      "flags": "i",
+      "description": "Live-shape bearer credential (contains_live_bearer).",
+      "allow": [
+        "apps/desktop/src-tauri/src/notification/safe_content.rs",
+        "apps/desktop/src-tauri/src/notification/content_builder.rs",
+        "apps/desktop/src-tauri/src/notification/redaction.rs",
+        "apps/desktop/src-tauri/src/agent/event_ingestor.rs"
+      ]
+    },
+    {
+      "id": "secret-assignment-shape",
+      "regex": "\"?(secret|token|password|passwd|api[_-]?key|access[_-]?key|private[_-]?key)\"?\\s*[:=]\\s*\"[A-Za-z0-9+/]{32,}={0,2}\"",
+      "flags": "i",
+      "description": "Assigned long base64/hex-looking credential literal.",
+      "allow": []
+    }
+  ]
+}

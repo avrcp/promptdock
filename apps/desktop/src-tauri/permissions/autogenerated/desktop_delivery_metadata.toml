@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-desktop-delivery-metadata"
+description = "Enables the desktop_delivery_metadata command without any pre-configured scope."
+commands.allow = ["desktop_delivery_metadata"]
+
+[[permission]]
+identifier = "deny-desktop-delivery-metadata"
+description = "Denies the desktop_delivery_metadata command without any pre-configured scope."
+commands.deny = ["desktop_delivery_metadata"]

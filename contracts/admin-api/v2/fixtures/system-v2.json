@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": 1787652000000,
+  "build": { "relayVersion": "0.6.0-rc.1", "gitCommit": null, "buildTime": null, "rustVersion": null, "apiVersion": "admin/v2", "gatewayVersion": "gateway/v5" },
+  "database": { "schemaIdentity": "promptdock-relay-v4", "schemaRevision": 1, "integrityStatus": "ok", "walStatus": "enabled", "foreignKeysEnabled": true, "poolHealth": "healthy", "sizeBucket": "lt_10mb", "lastRetentionPassAt": null },
+  "workers": [{ "name": "outbox-worker", "state": "running", "lastTickAt": null, "detail": "heartbeat_not_observed" }],
+  "retention": { "acceptedDays": 30, "deadLetterDays": 90, "inboundTerminalDays": 7, "inboundExpiredDays": 2, "lastRunAt": null, "lastResult": "not_observed" },
+  "configuration": { "wechatEnabled": true, "publicBindClass": "loopback", "adminBindClass": "loopback", "adminMode": "read_only", "forwardedHttpsObserved": false, "featureFlags": ["admin_read_v2", "admin_wechat_status_v2"] },
+  "currentAlerts": []
+}

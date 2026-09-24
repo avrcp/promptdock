@@ -1,0 +1,79 @@
+{
+  "sourceSha": "968835997714baaff199cfed5f89a2c65d8ca77d",
+  "platform": "windows",
+  "generator": "generate.mjs (independent extraction; no PromptDock imports)",
+  "cases": [
+    {
+      "id": "stop_windows_override_defaults_and_ignored_matcher",
+      "key": "C:\\fixture\\.codex\\hooks.json:stop:2:1",
+      "normalizedIdentity": {
+        "event_name": "stop",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cmd.exe /D /S /C echo windows",
+            "timeout": 600,
+            "async": false
+          }
+        ]
+      },
+      "canonicalJson": "{\"event_name\":\"stop\",\"hooks\":[{\"async\":false,\"command\":\"cmd.exe /D /S /C echo windows\",\"timeout\":600,\"type\":\"command\"}]}",
+      "trustedHash": "sha256:c9b23295dc1ccb1a20177302b7ba5de05ecc066aa2ce839da9f473096e489038"
+    },
+    {
+      "id": "permission_matcher_status_and_explicit_timeout",
+      "key": "C:\\fixture\\.codex\\hooks.json:permission_request:0:0",
+      "normalizedIdentity": {
+        "event_name": "permission_request",
+        "matcher": "Bash|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "approve.cmd",
+            "timeout": 8,
+            "async": false,
+            "statusMessage": "Waiting for approval"
+          }
+        ]
+      },
+      "canonicalJson": "{\"event_name\":\"permission_request\",\"hooks\":[{\"async\":false,\"command\":\"approve.cmd\",\"statusMessage\":\"Waiting for approval\",\"timeout\":8,\"type\":\"command\"}],\"matcher\":\"Bash|Edit\"}",
+      "trustedHash": "sha256:f0c6d56ba32014969d2408c2b647b7d67154d4d968d4d26e9041279e36393c7c"
+    },
+    {
+      "id": "user_prompt_timeout_floor_default_context_limit_and_ignored_matcher",
+      "key": "C:\\fixture\\.codex\\hooks.json:user_prompt_submit:1:3",
+      "normalizedIdentity": {
+        "event_name": "user_prompt_submit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "prompt-handler",
+            "timeout": 1,
+            "async": true,
+            "statusMessage": "Capturing prompt"
+          }
+        ]
+      },
+      "canonicalJson": "{\"event_name\":\"user_prompt_submit\",\"hooks\":[{\"async\":true,\"command\":\"prompt-handler\",\"statusMessage\":\"Capturing prompt\",\"timeout\":1,\"type\":\"command\"}]}",
+      "trustedHash": "sha256:dd70c055b5c294f7aacaa7d069620bbfae5956b97b015a9ff09912b8955959b8"
+    },
+    {
+      "id": "user_prompt_non_default_context_limit",
+      "key": "C:\\fixture\\.codex\\hooks.json:user_prompt_submit:0:0",
+      "normalizedIdentity": {
+        "event_name": "user_prompt_submit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "prompt-handler",
+            "timeout": 9,
+            "async": false,
+            "additionalContextLimit": 1200
+          }
+        ]
+      },
+      "canonicalJson": "{\"event_name\":\"user_prompt_submit\",\"hooks\":[{\"additionalContextLimit\":1200,\"async\":false,\"command\":\"prompt-handler\",\"timeout\":9,\"type\":\"command\"}]}",
+      "trustedHash": "sha256:e5e8cacdb21b49d17e1827e70ac2b3b694ed11ed98a3d33c605131cfd1321f3b"
+    }
+  ]
+}

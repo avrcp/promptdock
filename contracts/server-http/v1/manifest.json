@@ -1,0 +1,102 @@
+{
+  "manifestVersion": 1,
+  "contract": "promptdock-relay-api-v1",
+  "fixtures": [
+    {
+      "path": "channel-managed-by-admin-v1.json",
+      "sha256": "e1ea93cdc868756dcc97719739c7dfdbc47325bb39f72171cc06e9f0f78440c8",
+      "mediaType": "application/json",
+      "schemaVersion": 1
+    },
+    {
+      "path": "device-status-v1.json",
+      "sha256": "57c99e05a8a70234695da6f58452fe93a32858f26ca37c8516578a169cd32b31",
+      "mediaType": "application/json",
+      "schemaVersion": 1
+    },
+    {
+      "path": "error-v1.json",
+      "sha256": "4625de830e60c21844213d651edb26c2eb9d23f9146a07b6aff7743c97e9ebdf",
+      "mediaType": "application/json",
+      "schemaVersion": 1
+    },
+    {
+      "path": "insufficient-scope-v1.json",
+      "sha256": "2fe6baec800e40e967028f385ba3cd41da7c02dbe9afd051787da14558179c4e",
+      "mediaType": "application/json",
+      "schemaVersion": 1
+    },
+    {
+      "path": "legacy-wechat-not-found-v1.json",
+      "sha256": "07fb1ae38ca3a45365403aa294d183df7467b88877eeaa6b9f2a4f24df0549c3",
+      "mediaType": "application/json",
+      "schemaVersion": 1
+    },
+    {
+      "path": "notification-accepted-v1.json",
+      "sha256": "453214dbfaa9eb5993de85000f104f329b7dd6b8cba810d24bc86d70f784ed3c",
+      "mediaType": "application/json",
+      "schemaVersion": 1
+    },
+    {
+      "path": "notification-bundle-receipt-v1.json",
+      "sha256": "1840324681e60a3abe8d37948570135f405a2a184b7005db316a6d7c618265a7",
+      "mediaType": "application/json",
+      "schemaVersion": 1
+    },
+    {
+      "path": "notification-bundle-v1.json",
+      "sha256": "439d0a546fcb7861cc865232556d7fd26de9dfc8e99c08bd76aa91d5d726fd9f",
+      "mediaType": "application/json",
+      "schemaVersion": 1
+    },
+    {
+      "path": "notification-status-v1.json",
+      "sha256": "672e174d956ebcf5d9acc9f490491635135f7587352f8cd328bdf62368b0f89d",
+      "mediaType": "application/json",
+      "schemaVersion": 1
+    },
+    {
+      "path": "notification-v1.json",
+      "sha256": "a8a4bd0d61ba2cb66ebe516fb5a4358d07c6d5b2728df15011bab4237bc52127",
+      "mediaType": "application/json",
+      "schemaVersion": 1
+    },
+    {
+      "path": "result-publication-v1.json",
+      "sha256": "55c65ad118dcc0798f5e980da3a8901e296e7e478234748e4e89a172412254fe",
+      "mediaType": "application/json",
+      "schemaVersion": 1
+    },
+    {
+      "path": "result-receipt-v1.json",
+      "sha256": "765a35243f7e85e926995c321ca8194f0e9e2b267d9e8a0fe47e88073e204ba2",
+      "mediaType": "application/json",
+      "schemaVersion": 1
+    },
+    {
+      "path": "server-info-v1.json",
+      "sha256": "b45abe39e0738dda321b03a3dc221c64f7dcadf4ac8f0f95d54fc1072b206f3d",
+      "mediaType": "application/json",
+      "schemaVersion": 1
+    },
+    {
+      "path": "wechat-login-v1.json",
+      "sha256": "e6cea5336151a88f393c1e66c5f4408137dcd423da907e242d1294c4a493daba",
+      "mediaType": "application/json",
+      "schemaVersion": 1
+    },
+    {
+      "path": "wechat-status-v1.json",
+      "sha256": "74fc7fbe4038033fe0bbbca9f2b3af9f803e4e3038b608061d15c170d3efa8d1",
+      "mediaType": "application/json",
+      "schemaVersion": 1
+    },
+    {
+      "path": "wechat-test-accepted-v1.json",
+      "sha256": "14a94b47938560c39539e6a68ff73f9e513f5fac4c74be7989fb4c077f305052",
+      "mediaType": "application/json",
+      "schemaVersion": 1
+    }
+  ]
+}

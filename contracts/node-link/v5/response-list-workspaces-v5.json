@@ -1,0 +1,16 @@
+{
+  "type": "response",
+  "requestId": "00000000-0000-4000-8000-00000000000a",
+  "generation": 3,
+  "result": {
+    "kind": "list_workspaces",
+    "items": [
+      {
+        "workspaceHandle": "workspace_1234567890abcdef1234567890ab",
+        "label": "Relay Admin",
+        "sensitivity": "internal_safe",
+        "remoteStartEnabled": true
+      }
+    ]
+  }
+}

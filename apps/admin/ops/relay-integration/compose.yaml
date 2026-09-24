@@ -1,0 +1,53 @@
+services:
+  relay-data-init:
+    image: alpine:3.20.3
+    command: ['sh', '-ec', 'chown -R 10001:10001 /var/lib/promptdock-relay']
+    network_mode: none
+    volumes:
+      - relay-data:/var/lib/promptdock-relay
+
+  relay:
+    image: ${RELAY_IMAGE}
+    depends_on:
+      relay-data-init:
+        condition: service_completed_successfully
+    volumes:
+      - relay-data:/var/lib/promptdock-relay
+      - ./relay-operator.toml:/etc/promptdock-relay/config.toml:ro
+    networks:
+      - relay-private
+
+  caddy:
+    image: caddy:2.11.4-alpine
+    depends_on:
+      relay:
+        condition: service_started
+    environment:
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASSWORD_HASH: ${ADMIN_PASSWORD_HASH}
+    network_mode: service:relay
+    volumes:
+      - ../../dist:/srv:ro
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+  client:
+    image: node:22.14.0-bookworm-slim
+    depends_on:
+      caddy:
+        condition: service_started
+    environment:
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    command: ['node', '-e', 'setInterval(() => {}, 2147483647)']
+    network_mode: service:relay
+
+networks:
+  relay-private:
+    internal: true
+
+volumes:
+  relay-data:
+  caddy-data:
+  caddy-config:

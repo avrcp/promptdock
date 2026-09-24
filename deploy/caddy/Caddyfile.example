@@ -1,0 +1,80 @@
+# Merge this block with any existing global options. Request URIs and headers
+# can contain bearer links, including on upstream connection failures.
+{
+	log default {
+		format filter {
+			wrap json
+			fields {
+				request>uri delete
+				request>headers delete
+			}
+		}
+	}
+}
+
+# Replace this hostname before installation. Relay and Admin listeners stay on
+# loopback; Caddy is the only public HTTP entry point.
+admin.example.com {
+	# Caddy obtains and renews TLS for this hostname. Keep the minimum protocol
+	# explicit so an accidental global Caddy default cannot weaken this boundary.
+	tls {
+		protocols tls1.2 tls1.3
+	}
+
+	encode zstd gzip
+
+	# Single-result capabilities are checked by Relay, independently of Admin.
+	log_skip /r/*
+	@resultRead path /r/* /result-assets/*
+	handle @resultRead {
+		reverse_proxy 127.0.0.1:8080
+	}
+
+	# Public Relay surfaces remain protected by Relay device authentication.
+	# Never put Basic Auth in front of these paths: Desktop and device clients
+	# do not possess the operator credential.
+	@relayPublic path /health/* /v1/* /v5/*
+	handle @relayPublic {
+		reverse_proxy 127.0.0.1:8080
+	}
+
+	# Every remaining request is an operator surface. Put only a Caddy password
+	# hash here; never commit or upload a plaintext password.
+	handle {
+		basic_auth {
+			operator <CADDY_HASH_ONLY>
+		}
+
+		@adminApi path /admin/api/v2/*
+		handle @adminApi {
+			header Cache-Control "no-store, max-age=0"
+			reverse_proxy 127.0.0.1:8081
+		}
+
+		@adminIndex path / /index.html
+		header @adminIndex Cache-Control "no-cache, max-age=0, must-revalidate"
+		@adminAssets path /assets/*
+		header @adminAssets Cache-Control "public, max-age=31536000, immutable"
+
+		handle {
+			root * /opt/promptdock-relay/current/admin
+			try_files {path} /index.html
+			file_server
+		}
+	}
+
+	# Add includeSubDomains only after every subdomain is confirmed HTTPS-only.
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "no-referrer"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		Cross-Origin-Opener-Policy "same-origin"
+		Cross-Origin-Resource-Policy "same-origin"
+		-Server
+	}
+	# Preserve the more restrictive CSP emitted by the Result Viewer.
+	@nonResult not path /r/*
+	header @nonResult Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+
+}

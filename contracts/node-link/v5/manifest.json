@@ -1,0 +1,174 @@
+{
+  "manifestVersion": 1,
+  "contract": "promptdock-relay-gateway-v5",
+  "fixtures": [
+    {
+      "path": "error-v5.json",
+      "sha256": "e6367a0d32f3152bdd2eb87186f25008f2b11297012311490cc14d2e291fae9f",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "hello-v5.json",
+      "sha256": "08ed519c1a892df70ce4abaed8fca370c3a493448cd2d148da1d7fa470b67b29",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "ping-v5.json",
+      "sha256": "62c27598ff29570bc52a440f8a75ce98e57fb53f91e06e36e4cc274d2ebcfcc0",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "policy-revoked-v5.json",
+      "sha256": "c618c8e1d45183fb06d6951483726f6292efd757cc5f16c80a15f117ebdc9f20",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "pong-v5.json",
+      "sha256": "a31ca3c9f7df0d1f693bf609b76a69662e70bd5062b9db0a3737e20a10680516",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "request-ack-v5.json",
+      "sha256": "84da6bb682dd48a47e0e079b90f425c0e98fc7ec09681055d770febc11a31645",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "request-cancel-run-v5.json",
+      "sha256": "6d8813681eda9e9691192e96a11a81d5af21535da946b260f052b43a7dad2478",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "request-get-device-info-v5.json",
+      "sha256": "c038ea193782ddc760985eed6eb6883504dfd40038f2872ba88d699ee0d67c26",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "request-get-run-detail-v5.json",
+      "sha256": "7499d80e25da0221a9e6b59cea094e536b264fb1ae0703d361b897677789c33f",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "request-get-run-tree-v5.json",
+      "sha256": "77c84b4212e5887d3fb4c05bc90128398a5bc826e5dedb7557d9950be72b492e",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "request-list-harness-profiles-v5.json",
+      "sha256": "4f65a1a215b44a8f59a80504c56a8c074d1c623df7c514c6f9442b54b96da0c6",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "request-list-runs-v5.json",
+      "sha256": "fb940429d7636bbe71ce00facdbcb7e263f674fb2381b343f212f7034d73616f",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "request-list-runtimes-v5.json",
+      "sha256": "0e46c610492409aca193652f39de13149ea0876b569fed61650fbd5b03c7a50e",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "request-list-task-presets-v5.json",
+      "sha256": "12d64e0bbae6d582274c11acfb0f10244f7f8cf92e61cc38ae9baa921a268a5d",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "request-list-workspaces-v5.json",
+      "sha256": "8d6dc5b18d23d9da6c21903c9b2a4f774c138dd52822203208c1a2a2b50c6961",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "request-start-run-v5.json",
+      "sha256": "9ebfb7ab201ea057032393d8fd4279df310eef0a9330dd8b16de866de919427e",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "response-cancel-run-v5.json",
+      "sha256": "532b238ed91ffa9d5a87ff1aee6bfa8a34aa73c42db8739e1eced44522d8b47d",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "response-get-device-info-v5.json",
+      "sha256": "cfe6862b16cc4382cb9ace273dd3bbc73743c03932713daa54424ae69c752cd6",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "response-get-run-detail-v5.json",
+      "sha256": "e522e31725deb605f86f2d3d32233ae1f201dfad6543aedc2cc9a6ffbb8c5ba6",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "response-get-run-tree-v5.json",
+      "sha256": "f8338c502623fcbf445179786e8238cb5784868597bd5ffe244d7004e45fad88",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "response-list-harness-profiles-v5.json",
+      "sha256": "a8adf3fe5c74a4a20a8db1374a861c46a8b8bdcb62c3262327858482dce25975",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "response-list-runs-v5.json",
+      "sha256": "9c07f85848c8b24de210d9866ec1ccab26515fdf99d97b86cd6a9b42a529e039",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "response-list-runtimes-v5.json",
+      "sha256": "83a4436fcbdbde52a0e37d6879d265e32393be5ac7d64ada3b3699c8f60e8c39",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "response-list-task-presets-v5.json",
+      "sha256": "28c83d7b230b7e238fda617bece7c9f01a0e8ee37eb11784403ba473d5f678b8",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "response-list-workspaces-v5.json",
+      "sha256": "487c9c097d5d85eaabc2b0cb17537b9278bc069ff7c63994968df7947fd605e8",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "response-start-run-v5.json",
+      "sha256": "293c9bc3d765e173b4a28d8e9ea80e3ed135f7ee9367f231b10229ea8f77d049",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "superseded-v5.json",
+      "sha256": "bacd2504626764082218927b9086e0ce9c066c3326abea423f93858e12d077a0",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    },
+    {
+      "path": "welcome-v5.json",
+      "sha256": "c32420ddc20091d2ccdce16ae0a399febc927f78d2984c5aee0c0e3763aedbc2",
+      "mediaType": "application/json",
+      "schemaVersion": 5
+    }
+  ]
+}

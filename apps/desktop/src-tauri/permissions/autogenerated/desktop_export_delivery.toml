@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-desktop-export-delivery"
+description = "Enables the desktop_export_delivery command without any pre-configured scope."
+commands.allow = ["desktop_export_delivery"]
+
+[[permission]]
+identifier = "deny-desktop-export-delivery"
+description = "Denies the desktop_export_delivery command without any pre-configured scope."
+commands.deny = ["desktop_export_delivery"]

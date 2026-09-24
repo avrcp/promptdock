@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 2,
+  "capabilities": [
+    "admin_read_v2",
+    "admin_device_manage_v2",
+    "admin_wechat_status_v2",
+    "admin_wechat_manage_v2",
+    "admin_wechat_login_v2",
+    "admin_maintenance_v2",
+    "admin_results_manage_v2"
+  ]
+}

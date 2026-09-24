@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-desktop-uninstall-hook"
+description = "Enables the desktop_uninstall_hook command without any pre-configured scope."
+commands.allow = ["desktop_uninstall_hook"]
+
+[[permission]]
+identifier = "deny-desktop-uninstall-hook"
+description = "Denies the desktop_uninstall_hook command without any pre-configured scope."
+commands.deny = ["desktop_uninstall_hook"]

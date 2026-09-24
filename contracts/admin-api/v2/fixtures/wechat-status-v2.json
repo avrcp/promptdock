@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": 1787652000000,
+  "state": "ready",
+  "accountHint": "wx:0123456789ab",
+  "lastPollAt": 1787651999000,
+  "lastContextAt": 1787651998000,
+  "lastProviderAcceptedAt": 1787651997000,
+  "queue": { "pending": 0, "sending": 0, "retrying": 0, "blocked": 0, "failed": 0 },
+  "lastErrorCode": null
+}

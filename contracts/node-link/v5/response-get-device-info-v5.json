@@ -1,0 +1,15 @@
+{
+  "type": "response",
+  "requestId": "00000000-0000-4000-8000-000000000003",
+  "generation": 3,
+  "result": {
+    "kind": "get_device_info",
+    "schemaVersion": 5,
+    "deviceName": "CONTRACT DEVICE",
+    "clientVersion": "1.4.0",
+    "capabilities": [
+      "device_info_v5",
+      "remote_runs_read_v2"
+    ]
+  }
+}

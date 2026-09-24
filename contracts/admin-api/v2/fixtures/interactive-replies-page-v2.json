@@ -1,0 +1,6 @@
+{
+  "items": [{ "id": "reply_0123456789abcdef", "commandRef": "inbound_0123456789abcdef", "targetFingerprint": "wx:0123…cdef", "state": "accepted", "occurredAt": 1787651990000, "errorCode": null }],
+  "nextCursor": null,
+  "total": null,
+  "generatedAt": 1787652000000
+}

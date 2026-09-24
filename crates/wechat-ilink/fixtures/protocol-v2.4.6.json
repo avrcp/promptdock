@@ -1,0 +1,192 @@
+{
+  "reference": {
+    "implementationVersion": "2.4.6",
+    "clientVersion": 132102,
+    "appId": "bot",
+    "botType": "3",
+    "defaultBaseUrl": "https://ilinkai.weixin.qq.com"
+  },
+  "paths": {
+    "getBotQrCode": "ilink/bot/get_bot_qrcode",
+    "getQrCodeStatus": "ilink/bot/get_qrcode_status",
+    "getUpdates": "ilink/bot/getupdates",
+    "sendMessage": "ilink/bot/sendmessage",
+    "notifyStart": "ilink/bot/msg/notifystart",
+    "notifyStop": "ilink/bot/msg/notifystop"
+  },
+  "timeoutsMs": {
+    "qr": 35000,
+    "longPoll": 35000,
+    "send": 15000,
+    "notify": 10000,
+    "connect": 10000
+  },
+  "headers": {
+    "contentType": "Content-Type",
+    "contentTypeValue": "application/json",
+    "authorizationType": "AuthorizationType",
+    "authorizationTypeValue": "ilink_bot_token",
+    "wechatUin": "X-WECHAT-UIN",
+    "appId": "iLink-App-Id",
+    "clientVersion": "iLink-App-ClientVersion",
+    "authorization": "Authorization",
+    "authorizationScheme": "Bearer"
+  },
+  "qrStatuses": [
+    "wait",
+    "scaned",
+    "confirmed",
+    "expired",
+    "scaned_but_redirect",
+    "need_verifycode",
+    "verify_code_blocked",
+    "binded_redirect"
+  ],
+  "examples": {
+    "getBotQrCodeRequest": {
+      "local_token_list": [
+        "fixture-local-token"
+      ]
+    },
+    "getBotQrCodeResponse": {
+      "qrcode": "fixture-qr-secret",
+      "qrcode_img_content": "https://weixin.qq.com/fixture-qr-secret"
+    },
+    "unknownQrStatus": {
+      "status": "future_status",
+      "extra": true
+    },
+    "getUpdatesRequest": {
+      "get_updates_buf": "fixture-cursor",
+      "base_info": {
+        "channel_version": "2.4.6",
+        "bot_agent": "PromptDockRelay/0.1.0"
+      }
+    },
+    "getUpdatesResponse": {
+      "ret": 0,
+      "msgs": [
+        {
+          "seq": 7,
+          "message_id": 42,
+          "from_user_id": "fixture-user@im.wechat",
+          "to_user_id": "fixture-bot@im.bot",
+          "client_id": "fixture-client-id",
+          "message_type": 1,
+          "message_state": 2,
+          "item_list": [
+            {
+              "type": 1,
+              "msg_id": "fixture-message-item",
+              "text_item": {
+                "text": "fixture inbound text"
+              }
+            }
+          ],
+          "context_token": "fixture-context-token",
+          "run_id": "fixture-run-id"
+        }
+      ],
+      "sync_buf": "fixture-sync-buffer",
+      "get_updates_buf": "fixture-next-cursor",
+      "longpolling_timeout_ms": 30000
+    },
+    "sendMessageRequest": {
+      "msg": {
+        "from_user_id": "",
+        "to_user_id": "fixture-user@im.wechat",
+        "client_id": "fixture-client-id",
+        "message_type": 2,
+        "message_state": 2,
+        "item_list": [
+          {
+            "type": 1,
+            "text_item": {
+              "text": "fixture notification"
+            }
+          }
+        ],
+        "context_token": "fixture-context-token",
+        "run_id": "fixture-run-id"
+      },
+      "base_info": {
+        "channel_version": "2.4.6",
+        "bot_agent": "PromptDockRelay/0.1.0"
+      }
+    },
+    "sendMessageResponses": [
+      {},
+      {
+        "ret": 0,
+        "message_id": "fixture-provider-id"
+      },
+      {
+        "ret": -2,
+        "errmsg": "rejected"
+      },
+      {
+        "errcode": -14,
+        "message_id": 12345
+      }
+    ],
+    "notifyRequest": {
+      "base_info": {
+        "channel_version": "2.4.6",
+        "bot_agent": "PromptDockRelay/0.1.0"
+      }
+    },
+    "notifyResponse": {
+      "ret": 0
+    }
+  },
+  "classificationVectors": [
+    {
+      "ret": -14,
+      "errcode": null,
+      "message": null,
+      "category": "AuthenticationExpired"
+    },
+    {
+      "ret": -2,
+      "errcode": null,
+      "message": "rate limit exceeded",
+      "category": "RateLimited"
+    },
+    {
+      "ret": -2,
+      "errcode": null,
+      "message": "context token expired",
+      "category": "ContextRejected"
+    },
+    {
+      "ret": -2,
+      "errcode": null,
+      "message": "authentication expired",
+      "category": "AuthenticationExpired"
+    },
+    {
+      "ret": -2,
+      "errcode": null,
+      "message": "prohibited by policy",
+      "category": "PolicyRejected"
+    },
+    {
+      "ret": -2,
+      "errcode": null,
+      "message": "rejected",
+      "category": "AmbiguousMinusTwo"
+    },
+    {
+      "ret": 400,
+      "errcode": null,
+      "message": "bad request",
+      "category": "InvalidRequest"
+    },
+    {
+      "ret": 999,
+      "errcode": null,
+      "message": "unclassified",
+      "category": "Unknown"
+    }
+  ]
+}

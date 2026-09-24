@@ -1,0 +1,55 @@
+{
+	admin off
+	log default {
+		format filter {
+			wrap json
+			fields {
+				request>uri delete
+				request>headers delete
+			}
+		}
+	}
+	auto_https disable_redirects
+}
+
+# Caddy shares Relay's network namespace. The only Admin upstream is Relay's
+# loopback listener, and neither service has a host port mapping.
+https://caddy:8443 {
+	bind 127.0.0.1
+	tls internal
+
+	log_skip /r/*
+	@relayRead path /r/* /result-assets/* /health/* /v1/* /v5/*
+	handle @relayRead {
+		reverse_proxy 127.0.0.1:8080
+	}
+
+	@adminRequest not path /r/* /result-assets/* /health/* /v1/* /v5/*
+	basic_auth @adminRequest {
+		{$ADMIN_USER} {$ADMIN_PASSWORD_HASH}
+	}
+
+	@nonResult not path /r/*
+	header @nonResult Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'"
+
+	header {
+
+		Cross-Origin-Opener-Policy "same-origin"
+		Cross-Origin-Resource-Policy "same-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		Referrer-Policy "no-referrer"
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+	}
+
+	@admin_api path /admin/api/v2/*
+	handle @admin_api {
+		reverse_proxy 127.0.0.1:8081
+	}
+
+	handle {
+		root * /srv
+		try_files {path} /index.html
+		file_server
+	}
+}

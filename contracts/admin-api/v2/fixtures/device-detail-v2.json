@@ -1,0 +1,18 @@
+{
+  "id": "00000000-0000-4000-8000-000000000001",
+  "fullDeviceUuid": "00000000-0000-4000-8000-000000000001",
+  "name": "operator-workstation",
+  "state": "online",
+  "scopes": ["gateway:connect", "job:query"],
+  "createdAt": 1787651000000,
+  "updatedAt": 1787651999000,
+  "lastSeenAt": 1787651999000,
+  "tokenFormatVersion": 2,
+  "lastRotatedAt": null,
+  "gatewayState": "connected",
+  "clientVersion": "promptdock/2.0.0-rc.1",
+  "connectedAt": 1787651900000,
+  "gatewayGeneration": 7,
+  "capabilities": ["device_info_v5", "remote_runs_read_v2", "runtime_catalog_v2", "run_launch_v2", "run_control_v2", "run_children_v2"],
+  "lastHeartbeatAt": 1787651999000
+}

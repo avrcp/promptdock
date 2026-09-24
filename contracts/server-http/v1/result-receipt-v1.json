@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "resultId": "contract-result-001",
+  "sourceHash": "1a75cf27f7696a8ef306e27d8dae4e314c438ca2eb4274c218c949b2447b9e1b",
+  "acceptedAt": 1800000000000,
+  "updatedAt": 1800000000000,
+  "pageState": "available",
+  "pageExpiresAt": 1800604800000,
+  "notificationId": "result-notice-001",
+  "notificationStatus": "pending_channel"
+}

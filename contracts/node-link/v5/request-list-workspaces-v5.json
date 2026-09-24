@@ -1,0 +1,10 @@
+{
+  "type": "request",
+  "requestId": "00000000-0000-4000-8000-00000000000a",
+  "generation": 3,
+  "issuedAt": 1800000000000,
+  "expiresAt": 1800000030000,
+  "action": {
+    "kind": "list_workspaces"
+  }
+}

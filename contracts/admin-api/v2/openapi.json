@@ -1,0 +1,3407 @@
+{
+  "components": {
+    "schemas": {
+      "AdminCapability": {
+        "enum": [
+          "admin_read_v2",
+          "admin_device_manage_v2",
+          "admin_wechat_status_v2",
+          "admin_wechat_manage_v2",
+          "admin_wechat_login_v2",
+          "admin_maintenance_v2",
+          "admin_results_manage_v2"
+        ],
+        "type": "string"
+      },
+      "AdminDeviceStateV2": {
+        "enum": [
+          "revoked",
+          "disabled",
+          "online",
+          "offline"
+        ],
+        "type": "string"
+      },
+      "AdminErrorV2": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "requestId"
+        ],
+        "type": "object"
+      },
+      "AdminGatewayStateV2": {
+        "enum": [
+          "connected",
+          "offline",
+          "not_enabled"
+        ],
+        "type": "string"
+      },
+      "AdminMetaV2": {
+        "additionalProperties": false,
+        "properties": {
+          "adminApiVersion": {
+            "example": 2,
+            "format": "int32",
+            "maximum": 2,
+            "minimum": 2,
+            "type": "integer"
+          },
+          "capabilities": {
+            "items": {
+              "$ref": "#/components/schemas/AdminCapability"
+            },
+            "type": "array"
+          },
+          "generatedAt": {
+            "type": "integer"
+          },
+          "relayVersion": {
+            "type": "string"
+          },
+          "schemaVersion": {
+            "example": 2,
+            "format": "int32",
+            "maximum": 2,
+            "minimum": 2,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "generatedAt",
+          "adminApiVersion",
+          "relayVersion",
+          "capabilities"
+        ],
+        "type": "object"
+      },
+      "AdminModeV2": {
+        "enum": [
+          "read_only",
+          "operator"
+        ],
+        "type": "string"
+      },
+      "AdminOverviewV2": {
+        "additionalProperties": false,
+        "properties": {
+          "currentAlerts": {
+            "items": {
+              "$ref": "#/components/schemas/CurrentAlertV2"
+            },
+            "type": "array"
+          },
+          "devices": {
+            "$ref": "#/components/schemas/DeviceSummaryV2"
+          },
+          "gatewayConnections": {
+            "items": {
+              "$ref": "#/components/schemas/GatewayConnectionV2"
+            },
+            "type": "array"
+          },
+          "generatedAt": {
+            "type": "integer"
+          },
+          "queue": {
+            "$ref": "#/components/schemas/QueueSummaryV2"
+          },
+          "relay": {
+            "$ref": "#/components/schemas/RelaySummaryV2"
+          },
+          "schemaVersion": {
+            "format": "int32",
+            "maximum": 2,
+            "minimum": 2,
+            "type": "integer"
+          },
+          "wechat": {
+            "$ref": "#/components/schemas/WechatSummaryV2"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "generatedAt",
+          "relay",
+          "wechat",
+          "devices",
+          "queue",
+          "gatewayConnections",
+          "currentAlerts"
+        ],
+        "type": "object"
+      },
+      "AdminPageV2_String": {
+        "additionalProperties": false,
+        "properties": {
+          "generatedAt": {
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "total": {
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "generatedAt"
+        ],
+        "type": "object"
+      },
+      "AlertComponentV2": {
+        "enum": [
+          "relay",
+          "wechat",
+          "outbox"
+        ],
+        "type": "string"
+      },
+      "AlertSeverityV2": {
+        "enum": [
+          "warning",
+          "error"
+        ],
+        "type": "string"
+      },
+      "BuildSummaryV2": {
+        "additionalProperties": false,
+        "properties": {
+          "apiVersion": {
+            "type": "string"
+          },
+          "buildTime": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "gatewayVersion": {
+            "type": "string"
+          },
+          "gitCommit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "relayVersion": {
+            "type": "string"
+          },
+          "rustVersion": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "relayVersion",
+          "apiVersion",
+          "gatewayVersion"
+        ],
+        "type": "object"
+      },
+      "ChannelEventItemV2": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/ChannelEventKindV2"
+          },
+          "occurredAt": {
+            "type": "integer"
+          },
+          "safeMessage": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "occurredAt",
+          "safeMessage"
+        ],
+        "type": "object"
+      },
+      "ChannelEventKindV2": {
+        "enum": [
+          "poll",
+          "context",
+          "login",
+          "login_cancelled",
+          "login_expired",
+          "login_failed",
+          "disconnect",
+          "reconnect",
+          "test"
+        ],
+        "type": "string"
+      },
+      "ComponentHealthV2": {
+        "enum": [
+          "healthy"
+        ],
+        "type": "string"
+      },
+      "CreateDeviceRequestV2": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string"
+          },
+          "scopes": {
+            "items": {
+              "$ref": "#/components/schemas/DeviceScopeV2"
+            },
+            "maxItems": 7,
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [
+          "name",
+          "scopes"
+        ],
+        "type": "object"
+      },
+      "CurrentAlertV2": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "component": {
+            "$ref": "#/components/schemas/AlertComponentV2"
+          },
+          "id": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "observedAt": {
+            "type": "integer"
+          },
+          "severity": {
+            "$ref": "#/components/schemas/AlertSeverityV2"
+          }
+        },
+        "required": [
+          "id",
+          "code",
+          "severity",
+          "component",
+          "message",
+          "observedAt"
+        ],
+        "type": "object"
+      },
+      "DatabaseIntegrityV2": {
+        "enum": [
+          "ok",
+          "failed"
+        ],
+        "type": "string"
+      },
+      "DatabaseSizeBucketV2": {
+        "enum": [
+          "lt_10mb",
+          "10_to_100mb",
+          "100_to_500mb",
+          "gt_500mb"
+        ],
+        "type": "string"
+      },
+      "DatabaseSummaryV2": {
+        "additionalProperties": false,
+        "properties": {
+          "foreignKeysEnabled": {
+            "type": "boolean"
+          },
+          "integrityStatus": {
+            "$ref": "#/components/schemas/DatabaseIntegrityV2"
+          },
+          "lastRetentionPassAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "poolHealth": {
+            "$ref": "#/components/schemas/ComponentHealthV2"
+          },
+          "schemaIdentity": {
+            "type": "string"
+          },
+          "schemaRevision": {
+            "type": "integer"
+          },
+          "sizeBucket": {
+            "$ref": "#/components/schemas/DatabaseSizeBucketV2"
+          },
+          "walStatus": {
+            "$ref": "#/components/schemas/WalStatusV2"
+          }
+        },
+        "required": [
+          "schemaIdentity",
+          "schemaRevision",
+          "integrityStatus",
+          "walStatus",
+          "foreignKeysEnabled",
+          "poolHealth",
+          "sizeBucket"
+        ],
+        "type": "object"
+      },
+      "DeliveriesPageV2": {
+        "additionalProperties": false,
+        "properties": {
+          "generatedAt": {
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/DeliveryListItemV2"
+            },
+            "type": "array"
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "total": {
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "generatedAt"
+        ],
+        "type": "object"
+      },
+      "DeliveriesQueryV2": {
+        "additionalProperties": false,
+        "properties": {
+          "cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "limit": {
+            "format": "int32",
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "origin": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/DeliveryOriginV2"
+              }
+            ]
+          },
+          "sinceAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "state": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/DeliveryStateV2"
+              }
+            ]
+          },
+          "untilAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "DeliveryKindV2": {
+        "enum": [
+          "run_event",
+          "test",
+          "interactive_reply",
+          "activation"
+        ],
+        "type": "string"
+      },
+      "DeliveryListItemV2": {
+        "additionalProperties": false,
+        "properties": {
+          "acceptedSegments": {
+            "format": "int32",
+            "maximum": 128,
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "attemptCount": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "createdAt": {
+            "type": "integer"
+          },
+          "errorCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/DeliveryKindV2"
+          },
+          "origin": {
+            "$ref": "#/components/schemas/DeliveryOriginV2"
+          },
+          "originLabel": {
+            "type": "string"
+          },
+          "priority": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "segmentCount": {
+            "format": "int32",
+            "maximum": 128,
+            "minimum": 1,
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "state": {
+            "$ref": "#/components/schemas/DeliveryStateV2"
+          },
+          "updatedAt": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "origin",
+          "originLabel",
+          "kind",
+          "state",
+          "priority",
+          "attemptCount",
+          "createdAt",
+          "updatedAt"
+        ],
+        "type": "object"
+      },
+      "DeliveryOriginV2": {
+        "enum": [
+          "device",
+          "system",
+          "admin"
+        ],
+        "type": "string"
+      },
+      "DeliveryStateV2": {
+        "enum": [
+          "queued",
+          "sending",
+          "retrying",
+          "blocked",
+          "accepted",
+          "failed",
+          "cancelled",
+          "expired"
+        ],
+        "type": "string"
+      },
+      "DeviceActionReceiptV2": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/DeviceActionV2"
+          },
+          "completedAt": {
+            "type": "integer"
+          },
+          "receiptId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "receiptId",
+          "action",
+          "completedAt"
+        ],
+        "type": "object"
+      },
+      "DeviceActionV2": {
+        "enum": [
+          "device.enable",
+          "device.disable",
+          "device.revoke"
+        ],
+        "type": "string"
+      },
+      "DeviceCredentialActionV2": {
+        "enum": [
+          "create",
+          "rotate"
+        ],
+        "type": "string"
+      },
+      "DeviceCredentialReceiptV2": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/DeviceCredentialActionV2"
+          },
+          "deviceId": {
+            "type": "string"
+          },
+          "issuedAt": {
+            "type": "integer"
+          },
+          "oneTimeToken": {
+            "type": "string"
+          },
+          "receiptId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "receiptId",
+          "action",
+          "deviceId",
+          "oneTimeToken",
+          "issuedAt"
+        ],
+        "type": "object"
+      },
+      "DeviceDetailV2": {
+        "additionalProperties": false,
+        "properties": {
+          "capabilities": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "clientVersion": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "connectedAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "createdAt": {
+            "type": "integer"
+          },
+          "fullDeviceUuid": {
+            "type": "string"
+          },
+          "gatewayGeneration": {
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "gatewayState": {
+            "$ref": "#/components/schemas/AdminGatewayStateV2"
+          },
+          "id": {
+            "type": "string"
+          },
+          "lastHeartbeatAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "lastRotatedAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "lastSeenAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "scopes": {
+            "items": {
+              "$ref": "#/components/schemas/DeviceScopeV2"
+            },
+            "type": "array"
+          },
+          "state": {
+            "$ref": "#/components/schemas/AdminDeviceStateV2"
+          },
+          "tokenFormatVersion": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "updatedAt": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "state",
+          "gatewayState",
+          "scopes",
+          "tokenFormatVersion",
+          "createdAt",
+          "updatedAt",
+          "fullDeviceUuid",
+          "capabilities"
+        ],
+        "type": "object"
+      },
+      "DeviceListItemV2": {
+        "additionalProperties": false,
+        "properties": {
+          "clientVersion": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "createdAt": {
+            "type": "integer"
+          },
+          "gatewayState": {
+            "$ref": "#/components/schemas/AdminGatewayStateV2"
+          },
+          "id": {
+            "type": "string"
+          },
+          "lastRotatedAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "lastSeenAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "scopes": {
+            "items": {
+              "$ref": "#/components/schemas/DeviceScopeV2"
+            },
+            "type": "array"
+          },
+          "state": {
+            "$ref": "#/components/schemas/AdminDeviceStateV2"
+          },
+          "tokenFormatVersion": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "updatedAt": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "state",
+          "gatewayState",
+          "scopes",
+          "tokenFormatVersion",
+          "createdAt",
+          "updatedAt"
+        ],
+        "type": "object"
+      },
+      "DeviceScopeV2": {
+        "enum": [
+          "notify:write",
+          "notify:read_own",
+          "channel:read",
+          "channel:manage",
+          "gateway:connect",
+          "job:query",
+          "job:control"
+        ],
+        "type": "string"
+      },
+      "DeviceStateCountV2": {
+        "additionalProperties": false,
+        "properties": {
+          "disabled": {
+            "type": "integer"
+          },
+          "offline": {
+            "type": "integer"
+          },
+          "online": {
+            "type": "integer"
+          },
+          "revoked": {
+            "type": "integer"
+          },
+          "unknown": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "online",
+          "offline",
+          "disabled",
+          "revoked",
+          "unknown"
+        ],
+        "type": "object"
+      },
+      "DeviceSummaryV2": {
+        "additionalProperties": false,
+        "properties": {
+          "enabledTotal": {
+            "type": "integer"
+          },
+          "onlineTotal": {
+            "type": "integer"
+          },
+          "recentlyOfflineTotal": {
+            "type": "integer"
+          },
+          "states": {
+            "$ref": "#/components/schemas/DeviceStateCountV2"
+          }
+        },
+        "required": [
+          "enabledTotal",
+          "onlineTotal",
+          "recentlyOfflineTotal",
+          "states"
+        ],
+        "type": "object"
+      },
+      "DevicesPageV2": {
+        "additionalProperties": false,
+        "properties": {
+          "generatedAt": {
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/DeviceListItemV2"
+            },
+            "type": "array"
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "total": {
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "generatedAt"
+        ],
+        "type": "object"
+      },
+      "DevicesQueryV2": {
+        "additionalProperties": false,
+        "properties": {
+          "cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "limit": {
+            "format": "int32",
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "search": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "state": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/AdminDeviceStateV2"
+              }
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "DisconnectWechatRequestV2": {
+        "additionalProperties": false,
+        "properties": {
+          "reason": {
+            "maxLength": 120,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason"
+        ],
+        "type": "object"
+      },
+      "EmptyMutationRequestV2": {
+        "additionalProperties": false,
+        "type": "object"
+      },
+      "GatewayConnectionV2": {
+        "additionalProperties": false,
+        "properties": {
+          "clientVersion": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "connected": {
+            "type": "boolean"
+          },
+          "deviceId": {
+            "type": "string"
+          },
+          "deviceName": {
+            "type": "string"
+          },
+          "generation": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "lastHeartbeatAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "deviceId",
+          "deviceName",
+          "generation",
+          "connected"
+        ],
+        "type": "object"
+      },
+      "InboundCommand": {
+        "enum": [
+          "help",
+          "list_devices",
+          "list_jobs",
+          "list_recent",
+          "list_failed",
+          "next_page",
+          "get_status",
+          "get_detail",
+          "get_tree",
+          "unknown"
+        ],
+        "type": "string"
+      },
+      "InboundCommandListItemV2": {
+        "additionalProperties": false,
+        "properties": {
+          "attemptCount": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "command": {
+            "$ref": "#/components/schemas/InboundCommand"
+          },
+          "createdAt": {
+            "type": "integer"
+          },
+          "errorCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "expiresAt": {
+            "type": "integer"
+          },
+          "id": {
+            "type": "string"
+          },
+          "senderHint": {
+            "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/InboundStateV2"
+          },
+          "updatedAt": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "command",
+          "senderHint",
+          "state",
+          "attemptCount",
+          "createdAt",
+          "expiresAt",
+          "updatedAt"
+        ],
+        "type": "object"
+      },
+      "InboundCommandsPageV2": {
+        "additionalProperties": false,
+        "properties": {
+          "generatedAt": {
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/InboundCommandListItemV2"
+            },
+            "type": "array"
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "total": {
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "generatedAt"
+        ],
+        "type": "object"
+      },
+      "InboundCommandsQueryV2": {
+        "additionalProperties": false,
+        "properties": {
+          "command": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/InboundCommand"
+              }
+            ]
+          },
+          "cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "limit": {
+            "format": "int32",
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "sinceAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "state": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/InboundStateV2"
+              }
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "InboundStateV2": {
+        "enum": [
+          "received",
+          "dispatching",
+          "waiting_gateway",
+          "reply_queued",
+          "expired",
+          "dead_letter"
+        ],
+        "type": "string"
+      },
+      "InteractiveRepliesPageV2": {
+        "additionalProperties": false,
+        "properties": {
+          "generatedAt": {
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/InteractiveReplyListItemV2"
+            },
+            "type": "array"
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "total": {
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "generatedAt"
+        ],
+        "type": "object"
+      },
+      "InteractiveRepliesQueryV2": {
+        "additionalProperties": false,
+        "properties": {
+          "cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "limit": {
+            "format": "int32",
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "state": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/DeliveryStateV2"
+              }
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "InteractiveReplyListItemV2": {
+        "additionalProperties": false,
+        "properties": {
+          "commandRef": {
+            "type": "string"
+          },
+          "errorCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "occurredAt": {
+            "type": "integer"
+          },
+          "state": {
+            "$ref": "#/components/schemas/DeliveryStateV2"
+          },
+          "targetFingerprint": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "commandRef",
+          "targetFingerprint",
+          "state",
+          "occurredAt"
+        ],
+        "type": "object"
+      },
+      "MaintenanceActionV2": {
+        "enum": [
+          "maintenance.retention"
+        ],
+        "type": "string"
+      },
+      "PublicBindClassV2": {
+        "enum": [
+          "loopback",
+          "container"
+        ],
+        "type": "string"
+      },
+      "QueueSummaryV2": {
+        "additionalProperties": false,
+        "properties": {
+          "blocked": {
+            "type": "integer"
+          },
+          "failed": {
+            "type": "integer"
+          },
+          "pending": {
+            "type": "integer"
+          },
+          "retrying": {
+            "type": "integer"
+          },
+          "sending": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "pending",
+          "sending",
+          "retrying",
+          "blocked",
+          "failed"
+        ],
+        "type": "object"
+      },
+      "RelayHealthV2": {
+        "enum": [
+          "healthy",
+          "degraded",
+          "failed"
+        ],
+        "type": "string"
+      },
+      "RelaySummaryV2": {
+        "additionalProperties": false,
+        "properties": {
+          "health": {
+            "$ref": "#/components/schemas/RelayHealthV2"
+          },
+          "lastCheckAt": {
+            "type": "integer"
+          },
+          "uptimeSeconds": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "health",
+          "version",
+          "uptimeSeconds",
+          "lastCheckAt"
+        ],
+        "type": "object"
+      },
+      "ResultDetailV2": {
+        "additionalProperties": false,
+        "properties": {
+          "acceptedAt": {
+            "type": "integer"
+          },
+          "bodyBytes": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "bodyPurgedAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "completedAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "contentMode": {
+            "type": "string"
+          },
+          "correlationKey": {
+            "type": "string"
+          },
+          "durationMs": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "notificationAttemptCount": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "notificationId": {
+            "type": "string"
+          },
+          "notificationLastErrorCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notificationStatus": {
+            "$ref": "#/components/schemas/ResultNotificationStatusV2"
+          },
+          "ownerDeviceId": {
+            "type": "string"
+          },
+          "pageExpiresAt": {
+            "type": "integer"
+          },
+          "pageState": {
+            "$ref": "#/components/schemas/ResultPageStateV2"
+          },
+          "resultId": {
+            "type": "string"
+          },
+          "resultRevision": {
+            "type": "string"
+          },
+          "resultRowId": {
+            "description": "Relay's globally unique results-row identifier. Admin commands use this\nkey because result_id is scoped to its owning device.",
+            "type": "string"
+          },
+          "revokedAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "safeTitle": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "sourceHash": {
+            "type": "string"
+          },
+          "startedAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "targetAccountFingerprint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "updatedAt": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "resultRowId",
+          "resultId",
+          "ownerDeviceId",
+          "safeTitle",
+          "source",
+          "contentMode",
+          "sourceHash",
+          "acceptedAt",
+          "updatedAt",
+          "pageState",
+          "pageExpiresAt",
+          "bodyBytes",
+          "notificationId",
+          "notificationStatus",
+          "notificationAttemptCount",
+          "correlationKey",
+          "resultRevision"
+        ],
+        "type": "object"
+      },
+      "ResultListItemV2": {
+        "additionalProperties": false,
+        "properties": {
+          "acceptedAt": {
+            "type": "integer"
+          },
+          "bodyBytes": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "bodyPurgedAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "contentMode": {
+            "type": "string"
+          },
+          "notificationAttemptCount": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "notificationId": {
+            "type": "string"
+          },
+          "notificationLastErrorCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notificationStatus": {
+            "$ref": "#/components/schemas/ResultNotificationStatusV2"
+          },
+          "ownerDeviceId": {
+            "type": "string"
+          },
+          "pageExpiresAt": {
+            "type": "integer"
+          },
+          "pageState": {
+            "$ref": "#/components/schemas/ResultPageStateV2"
+          },
+          "resultId": {
+            "type": "string"
+          },
+          "resultRowId": {
+            "description": "Relay's globally unique results-row identifier. Admin commands use this\nkey because result_id is scoped to its owning device.",
+            "type": "string"
+          },
+          "safeTitle": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "sourceHash": {
+            "type": "string"
+          },
+          "targetAccountFingerprint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "updatedAt": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "resultRowId",
+          "resultId",
+          "ownerDeviceId",
+          "safeTitle",
+          "source",
+          "contentMode",
+          "sourceHash",
+          "acceptedAt",
+          "updatedAt",
+          "pageState",
+          "pageExpiresAt",
+          "bodyBytes",
+          "notificationId",
+          "notificationStatus",
+          "notificationAttemptCount"
+        ],
+        "type": "object"
+      },
+      "ResultNotificationStatusV2": {
+        "enum": [
+          "pending_channel",
+          "sending_channel",
+          "retry_wait",
+          "provider_accepted",
+          "blocked_activation",
+          "blocked_reconnect",
+          "dead_letter",
+          "expired",
+          "cancelled"
+        ],
+        "type": "string"
+      },
+      "ResultPageStateV2": {
+        "description": "A result-page projection deliberately excludes plaintext body, encrypted\nstorage, share bearer tokens and resolved URLs. Those values never belong\non an Admin list or detail response.",
+        "enum": [
+          "available",
+          "revoked",
+          "expired",
+          "content_unavailable"
+        ],
+        "type": "string"
+      },
+      "ResultReceiptV2": {
+        "additionalProperties": false,
+        "properties": {
+          "acceptedAt": {
+            "type": "integer"
+          },
+          "notificationId": {
+            "type": "string"
+          },
+          "notificationStatus": {
+            "$ref": "#/components/schemas/ResultNotificationStatusV2"
+          },
+          "pageExpiresAt": {
+            "type": "integer"
+          },
+          "pageState": {
+            "$ref": "#/components/schemas/ResultPageStateV2"
+          },
+          "resultId": {
+            "type": "string"
+          },
+          "schemaVersion": {
+            "format": "int32",
+            "maximum": 1,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "sourceHash": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "resultId",
+          "sourceHash",
+          "acceptedAt",
+          "updatedAt",
+          "pageState",
+          "pageExpiresAt",
+          "notificationId",
+          "notificationStatus"
+        ],
+        "type": "object"
+      },
+      "ResultRevokeRequestV2": {
+        "additionalProperties": false,
+        "properties": {
+          "requestId": {
+            "maxLength": 128,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "requestId"
+        ],
+        "type": "object"
+      },
+      "ResultsPageV2": {
+        "additionalProperties": false,
+        "properties": {
+          "generatedAt": {
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ResultListItemV2"
+            },
+            "type": "array"
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "total": {
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "generatedAt"
+        ],
+        "type": "object"
+      },
+      "ResultsQueryV2": {
+        "additionalProperties": false,
+        "properties": {
+          "cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "limit": {
+            "format": "int32",
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "pageState": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ResultPageStateV2"
+              }
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "RetentionReceiptV2": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/MaintenanceActionV2"
+          },
+          "completedAt": {
+            "type": "integer"
+          },
+          "inboundDeleted": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "outboxDeleted": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "receiptId": {
+            "type": "string"
+          },
+          "selectionDeleted": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "startedAt": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "receiptId",
+          "action",
+          "outboxDeleted",
+          "inboundDeleted",
+          "selectionDeleted",
+          "startedAt",
+          "completedAt"
+        ],
+        "type": "object"
+      },
+      "RetentionResultV2": {
+        "enum": [
+          "success",
+          "failed",
+          "not_observed"
+        ],
+        "type": "string"
+      },
+      "RetentionSummaryV2": {
+        "additionalProperties": false,
+        "properties": {
+          "acceptedDays": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "deadLetterDays": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "inboundExpiredDays": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "inboundTerminalDays": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "lastResult": {
+            "$ref": "#/components/schemas/RetentionResultV2"
+          },
+          "lastRunAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "acceptedDays",
+          "deadLetterDays",
+          "inboundTerminalDays",
+          "inboundExpiredDays",
+          "lastResult"
+        ],
+        "type": "object"
+      },
+      "SafeConfigurationSummaryV2": {
+        "additionalProperties": false,
+        "properties": {
+          "adminBindClass": {
+            "type": "string"
+          },
+          "adminMode": {
+            "$ref": "#/components/schemas/AdminModeV2"
+          },
+          "featureFlags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "forwardedHttpsObserved": {
+            "type": "boolean"
+          },
+          "publicBindClass": {
+            "$ref": "#/components/schemas/PublicBindClassV2"
+          },
+          "wechatEnabled": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "wechatEnabled",
+          "publicBindClass",
+          "adminBindClass",
+          "adminMode",
+          "forwardedHttpsObserved",
+          "featureFlags"
+        ],
+        "type": "object"
+      },
+      "SafeWorkerStateV2": {
+        "enum": [
+          "running",
+          "idle",
+          "degraded",
+          "failed",
+          "disabled",
+          "stopping"
+        ],
+        "type": "string"
+      },
+      "SystemSnapshotV2": {
+        "additionalProperties": false,
+        "properties": {
+          "build": {
+            "$ref": "#/components/schemas/BuildSummaryV2"
+          },
+          "configuration": {
+            "$ref": "#/components/schemas/SafeConfigurationSummaryV2"
+          },
+          "currentAlerts": {
+            "items": {
+              "$ref": "#/components/schemas/CurrentAlertV2"
+            },
+            "type": "array"
+          },
+          "database": {
+            "$ref": "#/components/schemas/DatabaseSummaryV2"
+          },
+          "generatedAt": {
+            "type": "integer"
+          },
+          "retention": {
+            "$ref": "#/components/schemas/RetentionSummaryV2"
+          },
+          "schemaVersion": {
+            "format": "int32",
+            "maximum": 2,
+            "minimum": 2,
+            "type": "integer"
+          },
+          "workers": {
+            "items": {
+              "$ref": "#/components/schemas/WorkerSummaryV2"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "generatedAt",
+          "build",
+          "database",
+          "workers",
+          "retention",
+          "configuration",
+          "currentAlerts"
+        ],
+        "type": "object"
+      },
+      "WalStatusV2": {
+        "enum": [
+          "enabled",
+          "disabled"
+        ],
+        "type": "string"
+      },
+      "WechatActionV2": {
+        "enum": [
+          "wechat.disconnect"
+        ],
+        "type": "string"
+      },
+      "WechatDisconnectReceiptV2": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/WechatActionV2"
+          },
+          "completedAt": {
+            "type": "integer"
+          },
+          "receiptId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "receiptId",
+          "action",
+          "completedAt"
+        ],
+        "type": "object"
+      },
+      "WechatEventsPageV2": {
+        "additionalProperties": false,
+        "properties": {
+          "generatedAt": {
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ChannelEventItemV2"
+            },
+            "type": "array"
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "total": {
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "generatedAt"
+        ],
+        "type": "object"
+      },
+      "WechatEventsQueryV2": {
+        "additionalProperties": false,
+        "properties": {
+          "cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "kinds": {
+            "items": {
+              "$ref": "#/components/schemas/ChannelEventKindV2"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "limit": {
+            "format": "int32",
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "sinceAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "WechatLoginStartRequestV2": {
+        "additionalProperties": false,
+        "properties": {
+          "forceFresh": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "forceFresh"
+        ],
+        "type": "object"
+      },
+      "WechatLoginStateV2": {
+        "enum": [
+          "fetching_qr",
+          "waiting_scan",
+          "scanned",
+          "verify_code_required",
+          "refreshing_qr",
+          "confirmed",
+          "already_connected",
+          "expired",
+          "cancelled",
+          "failed"
+        ],
+        "type": "string"
+      },
+      "WechatLoginV2": {
+        "additionalProperties": false,
+        "properties": {
+          "canSubmitVerifyCode": {
+            "type": "boolean"
+          },
+          "errorCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "expiresAt": {
+            "type": "integer"
+          },
+          "loginId": {
+            "type": "string"
+          },
+          "qrContent": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "state": {
+            "$ref": "#/components/schemas/WechatLoginStateV2"
+          }
+        },
+        "required": [
+          "loginId",
+          "state",
+          "expiresAt",
+          "canSubmitVerifyCode"
+        ],
+        "type": "object"
+      },
+      "WechatLoginVerifyRequestV2": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "pattern": "^[0-9]{1,16}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code"
+        ],
+        "type": "object"
+      },
+      "WechatStateV2": {
+        "enum": [
+          "disconnected",
+          "connected_awaiting_activation",
+          "ready",
+          "degraded",
+          "needs_reconnect",
+          "credentials_unreadable"
+        ],
+        "type": "string"
+      },
+      "WechatStatusV2": {
+        "additionalProperties": false,
+        "properties": {
+          "accountHint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "generatedAt": {
+            "type": "integer"
+          },
+          "lastContextAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "lastErrorCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "lastPollAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "lastProviderAcceptedAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "queue": {
+            "$ref": "#/components/schemas/QueueSummaryV2"
+          },
+          "schemaVersion": {
+            "format": "int32",
+            "maximum": 2,
+            "minimum": 2,
+            "type": "integer"
+          },
+          "state": {
+            "$ref": "#/components/schemas/WechatStateV2"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "generatedAt",
+          "state",
+          "queue"
+        ],
+        "type": "object"
+      },
+      "WechatSummaryV2": {
+        "additionalProperties": false,
+        "properties": {
+          "accountHint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "lastContextAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "lastErrorCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "lastPollAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "lastProviderAcceptedAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "queue": {
+            "$ref": "#/components/schemas/QueueSummaryV2"
+          },
+          "state": {
+            "$ref": "#/components/schemas/WechatStateV2"
+          }
+        },
+        "required": [
+          "state",
+          "queue"
+        ],
+        "type": "object"
+      },
+      "WechatTestReceiptV2": {
+        "additionalProperties": false,
+        "properties": {
+          "issuedAt": {
+            "type": "integer"
+          },
+          "receiptId": {
+            "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/WechatTestStateV2"
+          }
+        },
+        "required": [
+          "receiptId",
+          "state",
+          "issuedAt"
+        ],
+        "type": "object"
+      },
+      "WechatTestStateV2": {
+        "enum": [
+          "accepted_by_relay"
+        ],
+        "type": "string"
+      },
+      "WorkerSummaryV2": {
+        "additionalProperties": false,
+        "properties": {
+          "detail": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "lastTickAt": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/SafeWorkerStateV2"
+          }
+        },
+        "required": [
+          "name",
+          "state"
+        ],
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "description": "Restricted same-origin Relay operator API. Rust wire types are the only editable contract authority.",
+    "license": {
+      "name": ""
+    },
+    "title": "PromptDock Relay Admin API",
+    "version": "2.0.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/admin/api/v2/deliveries": {
+      "get": {
+        "operationId": "listAdminDeliveriesV2",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "state",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/DeliveryStateV2"
+            }
+          },
+          {
+            "in": "query",
+            "name": "origin",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/DeliveryOriginV2"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sinceAt",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "untilAt",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeliveriesPageV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/devices": {
+      "get": {
+        "operationId": "listAdminDevicesV2",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "maxLength": 64,
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "state",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AdminDeviceStateV2"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DevicesPageV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      },
+      "post": {
+        "operationId": "createAdminDeviceV2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDeviceRequestV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceCredentialReceiptV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/devices/{device_id}": {
+      "get": {
+        "operationId": "getAdminDeviceV2",
+        "parameters": [
+          {
+            "description": "Device UUID",
+            "in": "path",
+            "name": "device_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceDetailV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/devices/{device_id}/disable": {
+      "post": {
+        "operationId": "disableAdminDeviceV2",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "device_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyMutationRequestV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceActionReceiptV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/devices/{device_id}/enable": {
+      "post": {
+        "operationId": "enableAdminDeviceV2",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "device_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyMutationRequestV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceActionReceiptV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/devices/{device_id}/revoke": {
+      "post": {
+        "operationId": "revokeAdminDeviceV2",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "device_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyMutationRequestV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceActionReceiptV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/devices/{device_id}/rotate": {
+      "post": {
+        "operationId": "rotateAdminDeviceV2",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "device_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyMutationRequestV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceCredentialReceiptV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/inbound-commands": {
+      "get": {
+        "operationId": "listAdminInboundCommandsV2",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "command",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/InboundCommand"
+            }
+          },
+          {
+            "in": "query",
+            "name": "state",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/InboundStateV2"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sinceAt",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboundCommandsPageV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/interactive-replies": {
+      "get": {
+        "operationId": "listAdminInteractiveRepliesV2",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "state",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/DeliveryStateV2"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InteractiveRepliesPageV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/maintenance/retention": {
+      "post": {
+        "operationId": "runAdminRetentionV2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyMutationRequestV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetentionReceiptV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/meta": {
+      "get": {
+        "operationId": "getAdminMetaV2",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminMetaV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/overview": {
+      "get": {
+        "operationId": "getAdminOverviewV2",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOverviewV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/results": {
+      "get": {
+        "operationId": "listAdminResultsV2",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pageState",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ResultPageStateV2"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultsPageV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/results/{result_row_id}": {
+      "get": {
+        "operationId": "getAdminResultV2",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "result_row_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultDetailV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/results/{result_row_id}/revoke": {
+      "post": {
+        "operationId": "revokeAdminResultV2",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "result_row_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResultRevokeRequestV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultReceiptV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/system": {
+      "get": {
+        "operationId": "getAdminSystemV2",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemSnapshotV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/wechat/disconnect": {
+      "post": {
+        "operationId": "disconnectAdminWechatV2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DisconnectWechatRequestV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WechatDisconnectReceiptV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/wechat/events": {
+      "get": {
+        "operationId": "listAdminWechatEventsV2",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "kinds",
+            "required": false,
+            "schema": {
+              "items": {
+                "$ref": "#/components/schemas/ChannelEventKindV2"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sinceAt",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WechatEventsPageV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/wechat/login": {
+      "post": {
+        "operationId": "startAdminWechatLoginV2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WechatLoginStartRequestV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WechatLoginV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/wechat/login/{login_id}": {
+      "delete": {
+        "operationId": "cancelAdminWechatLoginV2",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "login_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyMutationRequestV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WechatLoginV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      },
+      "get": {
+        "operationId": "getAdminWechatLoginV2",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "login_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WechatLoginV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/wechat/login/{login_id}/verify": {
+      "post": {
+        "operationId": "verifyAdminWechatLoginV2",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "login_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WechatLoginVerifyRequestV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WechatLoginV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/wechat/status": {
+      "get": {
+        "operationId": "getAdminWechatStatusV2",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WechatStatusV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    },
+    "/admin/api/v2/wechat/test": {
+      "post": {
+        "operationId": "testAdminWechatV2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyMutationRequestV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WechatTestReceiptV2"
+                }
+              }
+            },
+            "description": ""
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorV2"
+                }
+              }
+            },
+            "description": "Admin API error"
+          }
+        },
+        "tags": [
+          "admin-v2"
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "description": "Relay operator console contract",
+      "name": "admin-v2"
+    }
+  ]
+}

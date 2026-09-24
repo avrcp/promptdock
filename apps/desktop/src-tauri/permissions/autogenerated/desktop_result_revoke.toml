@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-desktop-result-revoke"
+description = "Enables the desktop_result_revoke command without any pre-configured scope."
+commands.allow = ["desktop_result_revoke"]
+
+[[permission]]
+identifier = "deny-desktop-result-revoke"
+description = "Denies the desktop_result_revoke command without any pre-configured scope."
+commands.deny = ["desktop_result_revoke"]

@@ -1,0 +1,12 @@
+{
+  "type": "response",
+  "requestId": "00000000-0000-4000-8000-00000000000d",
+  "generation": 3,
+  "result": {
+    "kind": "start_run",
+    "accepted": true,
+    "runHandle": "run_1234567890abcdef1234567890abcd",
+    "desiredState": "running",
+    "phase": "pending"
+  }
+}

@@ -1,0 +1,65 @@
+# cargo-deny policy for the PromptDock Cargo graphs.
+#
+# Two graphs are checked against this one file: the root relay workspace and the
+# workspace-excluded desktop crate (`cargo deny -C deny.toml check --manifest-path
+# apps/desktop/src-tauri/Cargo.toml licenses bans`). Both are wired into
+# .github/workflows/security.yml.
+#
+# The allow list below is derived from the resolved graphs, not assembled from
+# guesses: `cargo metadata --locked` over both graphs yields exactly the
+# expressions listed here, and `scripts/oss/check-license-policy.mjs` keeps the
+# Node side honest about the same categories.
+
+[licenses]
+# cargo-deny's current schema has no `default`/`unlicensed` key: anything that is
+# not listed in `allow` below fails the check, which is the behaviour we want.
+include-dev = true
+# Below this threshold cargo-deny falls back to asking a human rather than
+# claiming it recognised the license text.
+confidence-threshold = 0.93
+allow = [
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "BSL-1.0",
+    "CC0-1.0",
+    "CDLA-Permissive-2.0",
+    "ISC",
+    "MIT",
+    "MIT-0",
+    # Weak copyleft at file granularity, carried by the Servo-derived CSS parser
+    # stack behind Tauri and by utoipa's parser. Compatible with an Apache-2.0
+    # work; obligations attach to the MPL file, not to the whole binary.
+    "MPL-2.0",
+    "Unicode-3.0",
+    "Unlicense",
+    "Zlib",
+]
+
+# `r-efi` publishes `MIT OR Apache-2.0 OR LGPL-2.1-or-later`. The LGPL term is
+# one choice among three, and cargo-deny accepts an expression when any
+# alternative is allowed, so the LGPL branch stays unlisted on purpose: taking
+# the copyleft option would need this file to change, which is the point.
+# An expression cargo-deny cannot satisfy without tripping the gate:
+# copyleft-only, `AGPL-*`, `SSPL-*`, `BUSL-1.1`, `Elastic-2.0`, `*Source-Available*`,
+# or a missing license field.
+
+[bans]
+# First-party crates depend on each other by path, which the wildcard lint
+# cannot tell apart from a third-party `*` requirement. `allow-wildcard-paths`
+# exempts exactly that: local path dependencies stay exempt, and any registry
+# requirement without a version range still fails.
+allow-wildcard-paths = true
+# Two majors of the same crate in one lockfile is normal in Rust (different
+# transitive majors) and says nothing about safety, so it is reported only when
+# someone asks for it: `cargo deny check -W duplicate`. What stays denied is a
+# dependency with no pinned source or a wildcard requirement.
+multiple-versions = "allow"
+wildcards = "deny"
+highlight = "all"
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]

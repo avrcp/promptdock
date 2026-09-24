@@ -1,0 +1,40 @@
+[server]
+bind = "0.0.0.0:8080"
+exposure = "container"
+request_body_limit_bytes = 65536
+route_timeout_seconds = 10
+shutdown_timeout_seconds = 15
+
+[admin]
+enabled = true
+bind = "127.0.0.1:8081"
+allowed_origin = "https://127.0.0.1:18443"
+# read_only is the least-privilege setting and matches the compiled default: the
+# console still reads devices, deliveries, results and diagnostics, while every
+# write answers 403 ADMIN_READ_ONLY. "operator" only widens the write surface
+# (device rotate/revoke, result revocation, retention runs, and WeChat
+# disconnect/test/login) and never restricts reads. Nothing in this compose stack
+# or in scripts/server/docker-verify.ps1 issues an admin write, so change it in
+# your own copy only when you need one. See SECURITY.md.
+mode = "read_only"
+route_timeout_seconds = 5
+max_page_size = 100
+
+[database]
+path = "/var/lib/promptdock-relay/relay.db"
+max_connections = 4
+busy_timeout_ms = 5000
+
+[wechat]
+enabled = false
+connection_file = "/var/lib/promptdock-relay/wechat-connection.enc"
+
+[retention]
+accepted_days = 30
+dead_letter_days = 90
+inbound_terminal_days = 7
+inbound_expired_days = 2
+
+[logging]
+filter = "info,promptdock_server=info"
+format = "json"

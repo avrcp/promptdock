@@ -1,0 +1,9 @@
+{
+  "type": "error",
+  "requestId": "00000000-0000-4000-8000-000000000004",
+  "generation": 3,
+  "code": "BUSY",
+  "message": "Device is temporarily busy",
+  "retryable": true
+}
+

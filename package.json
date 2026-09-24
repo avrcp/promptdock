@@ -1,0 +1,30 @@
+{
+  "name": "@promptdock/monorepo",
+  "version": "0.6.0-rc.1",
+  "private": true,
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@11.10.0",
+  "engines": {
+    "node": ">=24.18.0 <25"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "design:check": "pnpm --filter @promptdock/desktop design:check && pnpm --filter @promptdock/relay-admin design:check",
+    "contracts:check": "pnpm --filter @promptdock/desktop contracts:check",
+    "contracts:generate-admin": "node scripts/contracts/generate-admin-api-contract.mjs",
+    "oss:check": "node scripts/oss/check-public-tree.mjs",
+    "oss:selftest": "node scripts/oss/selftest-check-public-tree.mjs",
+    "security:check": "node scripts/oss/check-public-tree.mjs && node scripts/oss/selftest-check-public-tree.mjs && node scripts/oss/check-license-policy.mjs",
+    "dev": "pnpm --filter @promptdock/desktop dev",
+    "dev:mock": "pnpm --filter @promptdock/desktop dev:mock",
+    "tauri:dev": "pnpm --filter @promptdock/desktop tauri dev",
+    "tauri:build": "pnpm --filter @promptdock/desktop tauri build",
+    "quality": "bash scripts/quality/quality.sh",
+    "quality:ps1": "pwsh scripts/quality/quality.ps1",
+    "quality:desktop": "bash scripts/quality/quality-desktop.sh"
+  }
+}

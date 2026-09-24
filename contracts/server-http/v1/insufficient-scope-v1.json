@@ -1,0 +1,7 @@
+{
+  "error": {
+    "code": "INSUFFICIENT_SCOPE",
+    "message": "request is not permitted",
+    "requestId": "00000000-0000-4000-8000-000000000002"
+  }
+}

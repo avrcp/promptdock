@@ -1,0 +1,62 @@
+# Gitleaks configuration for the PromptDock monorepo.
+#
+# This file is the second, independent layer under the in-house repo-wide gate
+# (`scripts/oss/check-public-tree.mjs`); both run in .github/workflows/security.yml.
+#
+# Everything allowed here is a synthetic value that exists precisely so a test can
+# prove redaction and non-retention work. Each entry was taken from the retained
+# scan report for the shipped tree (4 hits in the desktop redaction unit tests, 1
+# on a contract fixture field name).
+#
+# Entries are written as patterns, never as the sentinel text itself. Gitleaks does
+# not need the literal to match it, and pasting one would trip the repo-wide gate -
+# which refuses live credential shapes in any shipped file, including this one.
+#
+# Each pattern is anchored to the Rust or JSON syntax that only the test line has,
+# because a bare character class is a repo-wide blind spot: `AWS_ACCESS_KEY_ID=AKIA
+# [0-9A-Z]{16}` on its own also forgives a real key in a `.env` file, and
+# `BEGIN RSA PRIVATE KEY` forgives a real PEM block. Both were measured rather than
+# assumed, during the private audit that assembled this tree; the working notes for
+# that audit are not part of the published repository.
+#
+# Two residuals are accepted deliberately:
+#   1. The expectation on redaction.rs:399 is a bare quoted token, so no syntax
+#      anchor exists and `"AKIA<16 chars>",` is forgiven anywhere in the tree.
+#      Closing it means editing that test to build the token with `concat!`.
+#   2. An allowlist `paths` entry was tried and removed: in gitleaks v8.23 the path
+#      list is an independent OR gate, so it forgave every finding in the two listed
+#      files - including a real PEM header pasted into one of them - without making
+#      any other entry narrower. It widens, so it is not used.
+# Neither layer below reads this file, so both can still fail the tree over it.
+
+title = "PromptDock gitleaks configuration"
+
+# Required: a config with no [[rules]] section replaces the built-in ruleset rather
+# than adding to it, so without this the scan runs with zero rules and reports
+# "no leaks found" no matter what is committed.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Synthetic credential shapes in redaction tests and one contract fixture field"
+regexTarget = "line"
+regexes = [
+  # apps/desktop/src-tauri/src/notification/redaction.rs - the AWS branch of the
+  # redactor's assignment-style input list. The trailing `\n",` is Rust source
+  # syntax and is what keeps a real dotenv line from being forgiven.
+  '''AWS_ACCESS_KEY_ID=AKIA[0-9A-Z]{16}\\n",''',
+  # Same file, the matching expectation. See residual 1 above.
+  '''^\s*"AKIA[0-9A-Z]{16}",$''',
+  # Same file, replaces_private_key_material_but_keeps_block_labels: the input
+  # string and the assertion that the block label survives redaction. A real key
+  # starts with a bare PEM header, which matches neither anchor.
+  #
+  # The PEM marker is written as `-{5}` rather than five literal dashes because the
+  # repo-wide gate refuses that literal in any shipped file, this one included. The
+  # regex still matches the real line.
+  '''"-{5}BEGIN RSA PRIVATE KEY-{5}\\n",''',
+  '''contains\("-{5}BEGIN RSA PRIVATE KEY-{5}"\)''',
+  # contracts/admin-api/v2/fixtures/result-detail-v2.json - generic-api-key fires
+  # on the field name `correlationKey`; the value is a fixture label.
+  '''"correlationKey": "result-correlation-\d{3}"''',
+]

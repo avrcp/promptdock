@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 2,
+  "adminDeviceStates": ["revoked", "disabled", "online", "offline"],
+  "adminGatewayStates": ["connected", "offline", "not_enabled"],
+  "adminModes": ["read_only", "operator"],
+  "alertComponents": ["relay", "wechat", "outbox"],
+  "alertSeverities": ["warning", "error"],
+  "channelEventKinds": [
+    "poll",
+    "context",
+    "login",
+    "login_cancelled",
+    "login_expired",
+    "login_failed",
+    "disconnect",
+    "reconnect",
+    "test"
+  ],
+  "componentHealthStates": ["healthy"],
+  "databaseIntegrityStates": ["ok", "failed"],
+  "databaseSizeBuckets": ["lt_10mb", "10_to_100mb", "100_to_500mb", "gt_500mb"],
+  "deliveryKinds": ["run_event", "test", "interactive_reply", "activation"],
+  "deliveryOrigins": ["device", "system", "admin"],
+  "deliveryStates": [
+    "queued",
+    "sending",
+    "retrying",
+    "blocked",
+    "accepted",
+    "failed",
+    "cancelled",
+    "expired"
+  ],
+  "inboundStates": [
+    "received",
+    "dispatching",
+    "waiting_gateway",
+    "reply_queued",
+    "expired",
+    "dead_letter"
+  ],
+  "loginStates": [
+    "fetching_qr",
+    "waiting_scan",
+    "scanned",
+    "verify_code_required",
+    "refreshing_qr",
+    "confirmed",
+    "already_connected",
+    "expired",
+    "cancelled",
+    "failed"
+  ],
+  "publicBindClasses": ["loopback", "container"],
+  "relayHealthStates": ["healthy", "degraded", "failed"],
+  "retentionResults": ["success", "failed", "not_observed"],
+  "safeWorkerStates": ["running", "idle", "degraded", "failed", "disabled", "stopping"],
+  "walStates": ["enabled", "disabled"],
+  "wechatStates": [
+    "disconnected",
+    "connected_awaiting_activation",
+    "ready",
+    "degraded",
+    "needs_reconnect",
+    "credentials_unreadable"
+  ],
+  "wechatTestStates": ["accepted_by_relay"]
+}

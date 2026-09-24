@@ -1,0 +1,6 @@
+packages:
+  - 'apps/desktop'
+  - 'apps/admin'
+  - 'packages/*'
+allowBuilds:
+  esbuild: true

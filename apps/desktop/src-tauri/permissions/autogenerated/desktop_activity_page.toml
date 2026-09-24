@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-desktop-activity-page"
+description = "Enables the desktop_activity_page command without any pre-configured scope."
+commands.allow = ["desktop_activity_page"]
+
+[[permission]]
+identifier = "deny-desktop-activity-page"
+description = "Denies the desktop_activity_page command without any pre-configured scope."
+commands.deny = ["desktop_activity_page"]

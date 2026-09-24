@@ -1,0 +1,13 @@
+{
+  "type": "request",
+  "requestId": "00000000-0000-4000-8000-00000000000c",
+  "generation": 3,
+  "issuedAt": 1800000000000,
+  "expiresAt": 1800000030000,
+  "action": {
+    "kind": "list_task_presets",
+    "runtimeHandle": "runtime_1234567890abcdef1234567890abcd",
+    "workspaceHandle": "workspace_1234567890abcdef1234567890ab",
+    "harnessProfileHandle": "profile_1234567890abcdef1234567890abcd"
+  }
+}

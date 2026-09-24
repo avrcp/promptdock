@@ -1,0 +1,52 @@
+# Standalone example for a notification-only Relay. Copy and adapt this file;
+# deploy/examples/config.production.toml remains the normal full Relay configuration.
+[server]
+bind = "127.0.0.1:8080"
+exposure = "loopback"
+notification_only = true
+request_body_limit_bytes = 65536
+route_timeout_seconds = 10
+shutdown_timeout_seconds = 15
+
+[admin]
+enabled = true
+bind = "127.0.0.1:8081"
+allowed_origin = "https://admin.example.com"
+# A notification-only deployment exists to deliver and to be read, not to be
+# driven from the browser, so read_only is both the least-privilege and the
+# coherent choice here: every console read works, every write answers
+# 403 ADMIN_READ_ONLY. "operator" adds device rotate/revoke, result revocation,
+# retention runs and WeChat disconnect/test/login; it never restricts reads, so
+# it is not hardening. Set it only once you have decided you need one of those
+# actions. See SECURITY.md.
+mode = "read_only"
+route_timeout_seconds = 5
+max_page_size = 100
+
+[database]
+path = "/var/lib/promptdock-relay/relay.db"
+max_connections = 4
+busy_timeout_ms = 5000
+
+[wechat]
+enabled = true
+connection_file = "/var/lib/promptdock-relay/wechat-connection.enc"
+
+[retention]
+accepted_days = 30
+dead_letter_days = 90
+inbound_terminal_days = 7
+inbound_expired_days = 2
+
+[logging]
+filter = "info,promptdock_server=info"
+format = "json"
+
+# The public origin must match the Relay HTTPS address configured in Desktop.
+# Only enable after verifying Caddy /r/* and /result-assets/* routing.
+[results]
+enabled = false
+public_origin = "https://admin.example.com"
+share_ttl_days = 7
+max_body_bytes = 262144
+max_retained_body_bytes = 268435456

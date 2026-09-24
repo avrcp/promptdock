@@ -1,0 +1,10 @@
+{
+  "items": [
+    { "id": "wechat_test_0000000000000000000000000000000000000000000000000000000000000000", "kind": "test", "occurredAt": 1787652000000, "safeMessage": "WeChat test notification was queued" },
+    { "id": "00000000-0000-4000-8000-000000000000", "kind": "disconnect", "occurredAt": 1787651999500, "safeMessage": "WeChat was disconnected" },
+    { "id": "monitor-poll-1787651999000", "kind": "poll", "occurredAt": 1787651999000, "safeMessage": "WeChat polling completed" }
+  ],
+  "nextCursor": null,
+  "total": null,
+  "generatedAt": 1787652000000
+}

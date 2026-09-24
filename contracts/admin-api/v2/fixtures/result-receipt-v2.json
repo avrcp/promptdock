@@ -1,0 +1,11 @@
+{
+  "acceptedAt": 1735689600000,
+  "notificationId": "result-notification-001",
+  "notificationStatus": "cancelled",
+  "pageExpiresAt": 1738281600000,
+  "pageState": "revoked",
+  "resultId": "result-001",
+  "schemaVersion": 1,
+  "sourceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "updatedAt": 1735689700000
+}

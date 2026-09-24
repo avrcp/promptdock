@@ -1,0 +1,6 @@
+{
+  "items": [{ "id": "00000000-0000-4000-8000-000000000001", "name": "operator-workstation", "state": "offline", "scopes": ["gateway:connect"], "createdAt": 1787651000000, "updatedAt": 1787651900000, "lastSeenAt": 1787651900000, "tokenFormatVersion": 2, "lastRotatedAt": null, "gatewayState": "offline", "clientVersion": null }],
+  "nextCursor": null,
+  "total": null,
+  "generatedAt": 1787652000000
+}

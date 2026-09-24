@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-desktop-result-mark-seen"
+description = "Enables the desktop_result_mark_seen command without any pre-configured scope."
+commands.allow = ["desktop_result_mark_seen"]
+
+[[permission]]
+identifier = "deny-desktop-result-mark-seen"
+description = "Denies the desktop_result_mark_seen command without any pre-configured scope."
+commands.deny = ["desktop_result_mark_seen"]

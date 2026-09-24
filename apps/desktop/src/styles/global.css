@@ -1,0 +1,127 @@
+/* ============================================================
+   全局基线：reset + 元素基线 + 焦点 + 无障碍工具类
+   组件级样式一律走 design-system/components.css，不在此处堆砌。
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+
+html {
+  /* 尊重系统字号：全站使用 rem 无关的 px 令牌，但保留缩放能力 */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow: hidden;
+  background: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: var(--font-size-body);
+  line-height: var(--line-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---- 标题与段落的换行控制 ---- */
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: var(--weight-semibold);
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* ---- 选择色 ---- */
+::selection {
+  background: var(--brand-soft);
+  color: var(--text-primary);
+}
+
+/* ---- 原生控件的强调色 ---- */
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: var(--brand-primary);
+}
+
+/* ============================================================
+   焦点：全局统一，使用 --focus-ring 令牌。
+   此前焦点环写在 App.vue 的 scoped 块里，够不到子组件，
+   导航轨等控件只能依赖 UA 默认样式。
+   ============================================================ */
+:focus-visible {
+  outline: var(--focus-width) solid var(--focus-ring);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--radius-control);
+}
+
+/* 鼠标点击不出现焦点环，但保留键盘可见性 */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ============================================================
+   无障碍工具类
+   ============================================================ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  border: 0;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   滚动条（专业工具感：细、克制）
+   ============================================================ */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+::-webkit-scrollbar {
+  width: var(--scrollbar-size);
+  height: var(--scrollbar-size);
+}
+
+::-webkit-scrollbar-thumb {
+  border: var(--scrollbar-thumb-border) solid transparent;
+  border-radius: var(--radius-window);
+  background: var(--border-strong);
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-muted);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ============================================================
+   动效偏好
+   ============================================================ */
+@media (forced-colors: active) {
+  .dialog {
+    border-color: CanvasText;
+  }
+}

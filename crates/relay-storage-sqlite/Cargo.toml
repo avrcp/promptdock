@@ -1,0 +1,25 @@
+[package]
+name = "relay-storage-sqlite"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+license.workspace = true
+publish = false
+
+[lints]
+workspace = true
+
+[dependencies]
+sqlx = { version = "0.9", default-features = false, features = [
+    "macros",
+    "migrate",
+    "runtime-tokio",
+    "sqlite",
+] }
+thiserror = "2"
+tokio = { version = "1", features = ["fs"] }
+
+[dev-dependencies]
+tempfile = "3"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }

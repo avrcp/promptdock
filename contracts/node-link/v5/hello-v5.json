@@ -1,0 +1,13 @@
+{
+  "type": "hello",
+  "protocolVersion": 5,
+  "clientVersion": "1.4.0",
+  "capabilities": [
+    "device_info_v5",
+    "remote_runs_read_v2",
+    "runtime_catalog_v2",
+    "run_launch_v2",
+    "run_control_v2",
+    "run_children_v2"
+  ]
+}

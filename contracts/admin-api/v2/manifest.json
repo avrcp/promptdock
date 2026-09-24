@@ -1,0 +1,150 @@
+{
+  "manifestVersion": 1,
+  "contract": "promptdock-relay-admin-api-v2",
+  "fixtures": [
+    {
+      "path": "deliveries-page-v2.json",
+      "sha256": "fc2654f106d91e6120249b5f8ab162e6c96d3cdc2d0cd0ca42a31bd7e978cca0",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "device-action-receipt-v2.json",
+      "sha256": "0a9d022820b95e36f3aac2d7bc6a8e5e9d152402024eda8fd588a465ed4fcd21",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "device-create-receipt-v2.json",
+      "sha256": "bdbbf4bc2a7fa8657a68317e3d88620300901cb5099af2467f23dc8e6957b5ec",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "device-detail-v2.json",
+      "sha256": "be53ce41fc264970121140daf9857939b66e889d583eee73f6a6524c163b1094",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "device-rotate-receipt-v2.json",
+      "sha256": "6caa6cdfb639707265ef45c0ebc5a87a92b330be74d801d99b813a17edba6d0c",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "devices-page-v2.json",
+      "sha256": "e66fd2adf243dae5f9da73495ecc00137018f07bd9ef2bb254682b0c1716f776",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "error-v2.json",
+      "sha256": "39c8dd5988f72a1b31f95e3887e54221c5272d15638f57dd97ae057ffbbd160e",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "inbound-command-actions-v2.json",
+      "sha256": "3ddfde0c78bc97212e44122f5628229a5d1927e674a1c8507b25c524bff7b94f",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "inbound-commands-page-v2.json",
+      "sha256": "da2069daa9f65cd023f7f5739a7e74f38ed6a10251cc765e43b7d8c4fe0e412d",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "interactive-replies-page-v2.json",
+      "sha256": "10f19b35f7756dd66952c3b402c45d102a88706b7ac453e7077f996247348edb",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "meta-v2.json",
+      "sha256": "978c51d20fbb02967c8484f166f5cbb9ca890285ab9d791ba3df19cf345ba79e",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "overview-v2.json",
+      "sha256": "2fdf3eb6ae9243305b59625999cecdbb3b5c57e73f1140c0dd0fac3e623d45c6",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "result-detail-v2.json",
+      "sha256": "2f3cc03176c26620d01d4e809869c0ab3ee2ea9a62bafcf838c32d1fafbfd16f",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "result-receipt-v2.json",
+      "sha256": "87329afd21de8864825953cd66ef725807308164fe17b9fcc3ab7a24f8295c5c",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "results-page-v2.json",
+      "sha256": "b5942107294b13ee5dc4ef6c7464a93fe09fb50773f99a018fc82517f97c4a00",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "retention-action-receipt-v2.json",
+      "sha256": "138d34aed8cace87f4d536b1654e34e7020b303c8aff43f9848d0c57ce681665",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "system-v2.json",
+      "sha256": "20146911728e8fb873c86ce4159692c65cb0d7ddbcae7408b7cff3f45dd1036b",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "wechat-action-receipt-v2.json",
+      "sha256": "506babe89293a802aae7b84defcf23b81e5d9fc303ac6ca4ae26a00a04a7ba2d",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "wechat-events-page-v2.json",
+      "sha256": "aaf9bc6de87bd6dc062f9488513aa62d155ad836deb55b491b979939cf2cb473",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "wechat-login-cancelled-v2.json",
+      "sha256": "1ec16497fab82118950484f57962f7fdd4ab51e610876e94a463a05fb7484dd5",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "wechat-login-verify-required-v2.json",
+      "sha256": "5027c02147acf358032dd0c431862080856f6f02023afcde8b5e89c43abd089a",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "wechat-login-waiting-scan-v2.json",
+      "sha256": "48fb405db3f5deb32c8330b01d9975c29378eeb4cd99ea2829075303157f6b85",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "wechat-status-v2.json",
+      "sha256": "4f7062d7a4d7de1e9c80967d3e03a992b67411dff31ce17ff92991a207757d16",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    },
+    {
+      "path": "wechat-test-receipt-v2.json",
+      "sha256": "e4c57b3dae25cc37330f8443109c30bb89a534489d1d0527ecda0f0897f69fcf",
+      "mediaType": "application/json",
+      "schemaVersion": 2
+    }
+  ]
+}

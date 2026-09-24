@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "bundleId": "contract-bundle-001",
+  "dedupeKey": "contract-bundle-dedupe-001",
+  "kind": "run_completed",
+  "contentMode": "full_final",
+  "source": "codex_stop",
+  "correlationKey": "contract-run-001",
+  "resultRevision": 1,
+  "title": "Codex 本轮输出",
+  "body": "Stable full final body\n第二行🙂",
+  "sourceHash": "13171d30b4abed191d15df15174609d2c3a8ff676a1bea3f74088fc6774b981a",
+  "createdAt": 1800000000000,
+  "expiresAt": 1800000300000
+}

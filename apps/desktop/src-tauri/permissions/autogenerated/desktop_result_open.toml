@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-desktop-result-open"
+description = "Enables the desktop_result_open command without any pre-configured scope."
+commands.allow = ["desktop_result_open"]
+
+[[permission]]
+identifier = "deny-desktop-result-open"
+description = "Denies the desktop_result_open command without any pre-configured scope."
+commands.deny = ["desktop_result_open"]

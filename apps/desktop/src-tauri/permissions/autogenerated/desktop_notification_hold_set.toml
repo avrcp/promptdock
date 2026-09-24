@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-desktop-notification-hold-set"
+description = "Enables the desktop_notification_hold_set command without any pre-configured scope."
+commands.allow = ["desktop_notification_hold_set"]
+
+[[permission]]
+identifier = "deny-desktop-notification-hold-set"
+description = "Denies the desktop_notification_hold_set command without any pre-configured scope."
+commands.deny = ["desktop_notification_hold_set"]

@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-desktop-relay-configure"
+description = "Enables the desktop_relay_configure command without any pre-configured scope."
+commands.allow = ["desktop_relay_configure"]
+
+[[permission]]
+identifier = "deny-desktop-relay-configure"
+description = "Denies the desktop_relay_configure command without any pre-configured scope."
+commands.deny = ["desktop_relay_configure"]

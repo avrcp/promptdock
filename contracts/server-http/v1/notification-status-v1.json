@@ -1,0 +1,9 @@
+{
+  "notificationId": "contract-notification-001",
+  "status": "provider_accepted",
+  "attemptCount": 1,
+  "lastErrorCode": null,
+  "providerMessageId": "provider-contract-001",
+  "updatedAt": 1800000000100,
+  "providerAcceptedAt": 1800000000100
+}

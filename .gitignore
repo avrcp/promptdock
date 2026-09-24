@@ -1,0 +1,64 @@
+# Build outputs
+node_modules/
+dist/
+build/
+target/
+*.tsbuildinfo
+.turbo/
+.next/
+
+# Package manager state
+.pnpm-store/
+.pnpm-debug.log
+npm-debug.log*
+yarn-error.log*
+
+# Environment & secrets
+# These shapes are ignored here and refused as path patterns by scripts/oss/check-public-tree.mjs:
+# gitignore keeps an accidental local file out of `git add`, the gate catches one that is
+# force-added or already committed.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+*.enc
+*.dpapi
+master.key
+.secrets/
+.dev/
+evidence/private/
+
+# Test & coverage artifacts
+coverage/
+playwright-report/
+test-results/
+*.trace
+__pycache__/
+*.pyc
+
+# Runtime databases (schema + user data), never source
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+
+# Editor & OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local design-review / screenshot output
+.design-review/
+
+# Local runtime artifacts (desktop dev, isolated data dirs)
+.local/
+*.log

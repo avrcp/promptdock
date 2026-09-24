@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-desktop-launcher-status"
+description = "Enables the desktop_launcher_status command without any pre-configured scope."
+commands.allow = ["desktop_launcher_status"]
+
+[[permission]]
+identifier = "deny-desktop-launcher-status"
+description = "Denies the desktop_launcher_status command without any pre-configured scope."
+commands.deny = ["desktop_launcher_status"]

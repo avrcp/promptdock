@@ -1,0 +1,152 @@
+# Relay server, shared crates, admin console, contracts and deployment assets.
+#
+# The gate list itself lives in `scripts/quality/quality.sh` so that a contributor
+# running `pnpm quality` locally and CI are executing the same steps in the same
+# order. This file only provisions the toolchain and calls that script.
+
+name: relay
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: relay-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  quality:
+    name: Workspace quality
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Same file CONTRIBUTING.md tells contributors to use.
+          # No `cache: pnpm`: setup-node resolves the pnpm store path while it is
+          # still running, so it needs a pnpm binary that only `corepack enable`
+          # below creates. On runners without a preinstalled pnpm that step fails
+          # with "Unable to locate executable file: pnpm".
+          node-version-file: .node-version
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Provide the Caddy the ops gates shell out to
+        # validate-release-bundle.py runs `caddy adapt` and deploy-common.sh runs
+        # `caddy validate`, so the aggregate quality chain needs a caddy on PATH.
+        # The binary is extracted from the image tag the shipped Dockerfile pins,
+        # which keeps CI validating against the same Caddy the runtime image carries
+        # rather than whatever the distribution mirror happens to offer.
+        run: |
+          tag="$(grep -m1 -oE 'FROM caddy:[^ ]+ AS caddy-toolchain' deploy/docker/Dockerfile | awk '{print $2}')"
+          test -n "$tag"
+          echo "using $tag, the tag the shipped Dockerfile pins"
+          docker run --rm --entrypoint cat "$tag" /usr/bin/caddy > /usr/local/bin/caddy
+          chmod +x /usr/local/bin/caddy
+          caddy version
+
+      # rust-toolchain.toml pins 1.98.0 with rustfmt and clippy, so rustup
+      # installs the pinned toolchain on the first cargo call; `cargo fmt
+      # --check` and `cargo clippy` inside quality.sh are therefore the same
+      # versions the shipped container image builds with.
+      - name: Run the aggregate quality chain
+        run: bash scripts/quality/quality.sh
+
+  images:
+    name: Container images
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the relay runtime image
+        # Covers the admin-deps -> admin-builder -> rust-toolchain -> rust-builder
+        # -> relay-runtime chain, then the runtime stage on top.
+        run: |
+          docker build \
+            --file deploy/docker/Dockerfile \
+            --target runtime \
+            --build-arg SOURCE_COMMIT="$(git rev-parse HEAD)" \
+            --tag promptdock-relay:ci \
+            .
+
+      - name: Report the identity baked into the binary
+        # The runtime image is where a wrong SOURCE_COMMIT shows up: build-info
+        # reads the value compiled in, not the checkout.
+        run: |
+          docker run --rm --entrypoint promptdock-relay promptdock-relay:ci build-info \
+            | tee build-info.txt
+          grep -F "$(git rev-parse HEAD)" build-info.txt
+
+      - name: Build the admin + Caddy runtime image
+        run: |
+          docker build \
+            --file deploy/docker/Dockerfile \
+            --target admin-caddy-runtime \
+            --build-arg SOURCE_COMMIT="$(git rev-parse HEAD)" \
+            --tag promptdock-relay-admin:ci \
+            .
+
+      - name: Confirm the relay runtime image is not root
+        # relay-runtime declares USER promptdock and a nologin uid, so a regression
+        # back to a root entrypoint would be a security-relevant change that no Rust
+        # or JS test notices. --read-only proves nothing writes to the root filesystem
+        # at startup.
+        run: |
+          docker inspect promptdock-relay:ci --format '{{.Config.User}}' | grep -Ev '^(0|root|\s*)$'
+          docker run --rm --read-only --user 10001:10001 \
+            --entrypoint /bin/sh promptdock-relay:ci -c 'id -u' | grep -Fx 10001
+
+      - name: Confirm the admin image carries its built assets
+        # This stage intentionally inherits Caddy's root entrypoint rather than
+        # declaring a user: Caddy binds the privileged listener and drops itself, so
+        # asserting a non-root Config.User here would be asserting something the
+        # image does not do. What is worth pinning is that the two COPY lines still
+        # resolve to real content after the monorepo move. `set -eu` is not
+        # decoration: without it every test in the block runs and is discarded.
+        run: |
+          docker run --rm --entrypoint /bin/sh promptdock-relay-admin:ci -c '
+            set -eu
+            test -s /etc/caddy/Caddyfile
+            test -s /srv/admin/index.html
+            test -s /srv/admin/admin-artifact-manifest.json
+            ls /srv/admin/assets | grep -q "\.js$"
+            ls /srv/admin/assets | grep -q "\.css$"
+          '
+
+  shellcheck:
+    name: Shell lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    container:
+      image: koalaman/shellcheck-alpine:v0.11.0
+    steps:
+      - uses: actions/checkout@v4
+
+      # The lint image carries shellcheck and nothing else: no git, and because
+      # there is no git the checkout step falls back to the archive download, so the
+      # workspace has no `.git` to enumerate either. A fresh CI checkout contains
+      # exactly the tracked set, so the file list comes from the tree; the pin that
+      # the image exists to provide is kept by its tag.
+      - name: Lint every shell script in the checkout
+        # -x follows `# shellcheck source=` directives, which is what catches a
+        # library that moved without its consumers being updated.
+        run: |
+          files="$(find . -name '*.sh' -not -path './.git/*' | sed 's|^\./||' | sort)"
+          test -n "$files"
+          echo "$files" | wc -l
+          # shellcheck disable=SC2086
+          shellcheck $files
+          # shellcheck disable=SC2086
+          shellcheck -x $files

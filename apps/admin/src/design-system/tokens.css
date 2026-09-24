@@ -1,0 +1,284 @@
+/*
+ * PromptDock Relay Admin — design tokens
+ * Primitives, semantic colours, spacing, typography, elevation and motion.
+ * Components consume only --pd-* semantic tokens from this file.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* ──────────────────────────────────────────────────────────────────────
+   * Primitive palette
+   * Keep raw colour literals in this section only.
+   * ──────────────────────────────────────────────────────────────────── */
+  --pd-palette-accent: #8dff4f;
+  --pd-palette-accent-hover: #59d915;
+  --pd-palette-on-accent: #0a0a0a;
+
+  --pd-palette-workspace: #09090b;
+  --pd-palette-sidebar: #101013;
+  --pd-palette-header: #18181b;
+  --pd-palette-hover: #27272a;
+  --pd-palette-border-strong: #3f3f46;
+
+  --pd-palette-text: #f4f4f5;
+  --pd-palette-muted: #babac1;
+  --pd-palette-hint: #71717a;
+  /* Accessibility-hardened small-text colour. Use hint only for decorative/disabled content. */
+  --pd-palette-subtle-readable: #85858f;
+
+  --pd-palette-info: #6ac8ff;
+  --pd-palette-success: #41cb66;
+  --pd-palette-danger: #ff4b75;
+  --pd-palette-warning: #ffd54b;
+
+  --pd-palette-qr-white: #ffffff;
+  --pd-palette-qr-black: #000000;
+
+  /* ──────────────────────────────────────────────────────────────────────
+   * Semantic colours
+   * Components consume only these tokens, never primitive palette tokens.
+   * ──────────────────────────────────────────────────────────────────── */
+  --pd-container-workspace-bg: var(--pd-palette-workspace);
+  --pd-container-sidebar-bg: var(--pd-palette-sidebar);
+  --pd-container-header-bg: var(--pd-palette-header);
+  --pd-container-content-bg: var(--pd-palette-header);
+  --pd-container-panel-bg: var(--pd-palette-sidebar);
+  --pd-container-elevated-bg: var(--pd-palette-workspace);
+  --pd-container-sunken-bg: color-mix(
+    in srgb,
+    var(--pd-palette-workspace) 88%,
+    var(--pd-palette-header)
+  );
+
+  --pd-text-default: var(--pd-palette-text);
+  --pd-text-muted: var(--pd-palette-muted);
+  --pd-text-subtle: var(--pd-palette-subtle-readable);
+  --pd-text-hint: var(--pd-palette-hint);
+  --pd-text-disabled: color-mix(in srgb, var(--pd-palette-text) 60%, transparent);
+  --pd-text-on-primary: var(--pd-palette-on-accent);
+  --pd-text-link: var(--pd-palette-info);
+
+  --pd-border-separator: var(--pd-palette-hover);
+  --pd-border-emphasis: var(--pd-palette-border-strong);
+  --pd-border-overlay: var(--pd-palette-border-strong);
+  --pd-border-focus: var(--pd-palette-accent);
+
+  --pd-control-bg: var(--pd-palette-header);
+  --pd-control-bg-hovered: var(--pd-palette-hover);
+  --pd-control-bg-selected: var(--pd-palette-hover);
+  --pd-control-border-default: var(--pd-palette-hover);
+  --pd-control-border-active: var(--pd-palette-border-strong);
+  --pd-control-primary-bg: var(--pd-palette-accent);
+  --pd-control-primary-bg-hovered: var(--pd-palette-accent-hover);
+  --pd-control-primary-text: var(--pd-palette-on-accent);
+  --pd-control-disabled-bg: color-mix(in srgb, var(--pd-palette-header) 60%, transparent);
+  --pd-control-disabled-border: color-mix(in srgb, var(--pd-palette-hover) 60%, transparent);
+  --pd-control-disabled-text: color-mix(in srgb, var(--pd-palette-text) 60%, transparent);
+
+  --pd-primary: var(--pd-palette-accent);
+  --pd-primary-subtle: color-mix(in srgb, var(--pd-palette-accent) 10%, transparent);
+  --pd-primary-soft: color-mix(in srgb, var(--pd-palette-accent) 20%, transparent);
+  --pd-primary-muted: color-mix(in srgb, var(--pd-palette-accent) 40%, transparent);
+
+  --pd-feedback-info: var(--pd-palette-info);
+  --pd-feedback-info-subtle: color-mix(in srgb, var(--pd-palette-info) 12%, transparent);
+  --pd-feedback-info-muted: color-mix(in srgb, var(--pd-palette-info) 40%, transparent);
+
+  --pd-feedback-success: var(--pd-palette-success);
+  --pd-feedback-success-subtle: color-mix(in srgb, var(--pd-palette-success) 12%, transparent);
+  --pd-feedback-success-muted: color-mix(in srgb, var(--pd-palette-success) 40%, transparent);
+
+  --pd-feedback-warning: var(--pd-palette-warning);
+  --pd-feedback-warning-subtle: color-mix(in srgb, var(--pd-palette-warning) 12%, transparent);
+  --pd-feedback-warning-muted: color-mix(in srgb, var(--pd-palette-warning) 40%, transparent);
+
+  --pd-feedback-danger: var(--pd-palette-danger);
+  --pd-feedback-danger-subtle: color-mix(in srgb, var(--pd-palette-danger) 12%, transparent);
+  --pd-feedback-danger-muted: color-mix(in srgb, var(--pd-palette-danger) 40%, transparent);
+
+  --pd-selection-bg: #6ac8ff26;
+  --pd-selection-text: inherit;
+  --pd-overlay-bg: rgba(0, 0, 0, 0.5);
+  --pd-qr-surface-bg: var(--pd-palette-qr-white);
+  --pd-qr-foreground: var(--pd-palette-qr-black);
+
+  /* ──────────────────────────────────────────────────────────────────────
+   * Typography
+   * Geist covers Latin UI; Chinese uses the explicit CJK fallbacks.
+   * ──────────────────────────────────────────────────────────────────── */
+  --pd-font-interface: 'Geist Variable', 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Microsoft YaHei UI', 'PingFang SC', 'Noto Sans CJK SC', 'Noto Sans SC', 'Helvetica Neue',
+    Arial, sans-serif;
+  --pd-font-code: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', 'SF Mono', Menlo,
+    Consolas, 'Liberation Mono', monospace;
+
+  --pd-font-weight-regular: 400;
+  --pd-font-weight-medium: 500;
+  --pd-font-weight-semibold: 600;
+
+  --pd-font-size-10: 10px;
+  --pd-font-size-11: 11px;
+  --pd-font-size-12: 12px;
+  --pd-font-size-13: 13px;
+  --pd-font-size-14: 14px;
+  --pd-font-size-16: 16px;
+  --pd-font-size-18: 18px;
+  --pd-font-size-20: 20px;
+  --pd-font-size-24: 24px;
+
+  --pd-line-height-compact: 1.25;
+  --pd-line-height-metadata: 1.333333;
+  --pd-line-height-ui: 1.428571;
+  --pd-line-height-code: 1.5;
+  --pd-line-height-reading: 1.6;
+
+  --pd-letter-spacing-normal: normal;
+  --pd-letter-spacing-loose: 0.02em;
+  --pd-letter-spacing-wide: 0.05em;
+  --pd-letter-spacing-widest: 0.1em;
+
+  /* ──────────────────────────────────────────────────────────────────────
+   * Spacing, shape and dimensions
+   * ──────────────────────────────────────────────────────────────────── */
+  --pd-space-0: 0;
+  --pd-space-2: 2px;
+  --pd-space-4: 4px;
+  --pd-space-8: 8px;
+  --pd-space-12: 12px;
+  --pd-space-16: 16px;
+  --pd-space-24: 24px;
+  --pd-space-32: 32px;
+  --pd-space-40: 40px;
+  --pd-space-64: 64px;
+
+  --pd-radius-xs: 2px;
+  --pd-radius-sm: 4px;
+  --pd-radius-md: 6px;
+  --pd-radius-lg: 8px;
+
+  --pd-control-height-sm: 28px;
+  --pd-control-height-md: 32px;
+  --pd-control-height-touch: 40px;
+  --pd-icon-size-sm: 14px;
+  --pd-icon-size-md: 16px;
+  --pd-icon-button-size-sm: 28px;
+  --pd-icon-button-size-md: 32px;
+  --pd-keycap-height: 22px;
+  --pd-badge-height: 26px;
+  --pd-empty-state-min-block-size: 132px;
+  --pd-drawer-max-width: 420px;
+  --pd-dialog-max-width: 448px;
+
+  --pd-shell-topbar-height: 48px;
+  --pd-shell-sidebar-width: 208px;
+  --pd-shell-sidebar-rail-width: 56px;
+  --pd-shell-mobile-nav-height: 56px;
+  --pd-shell-content-max-width: 1600px;
+  --pd-shell-content-padding: 24px;
+
+  --pd-table-header-height: 32px;
+  --pd-table-row-height: 40px;
+  --pd-panel-header-height: 32px;
+
+  --pd-status-chip-height: 22px;
+  --pd-status-chip-max-inline-size: 14rem;
+
+  /* ──────────────────────────────────────────────────────────────────────
+   * Elevation, motion and layering
+   * ──────────────────────────────────────────────────────────────────── */
+  --pd-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --pd-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --pd-shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.4);
+
+  --pd-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --pd-transition-fast: 120ms var(--pd-ease-standard);
+  --pd-transition-normal: 180ms var(--pd-ease-standard);
+  --pd-transition-reveal: 160ms var(--pd-ease-standard);
+
+  --pd-z-base: 0;
+  --pd-z-sticky: 20;
+  --pd-z-menu: 40;
+  --pd-z-overlay: 50;
+  --pd-z-dialog: 60;
+}
+
+@media (max-width: 1199px) {
+  :root {
+    --pd-shell-content-padding: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --pd-shell-content-padding: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --pd-transition-fast: 0ms;
+    --pd-transition-normal: 0ms;
+    --pd-transition-reveal: 0ms;
+  }
+}
+
+@media (forced-colors: active) {
+  :root {
+    --pd-container-workspace-bg: Canvas;
+    --pd-container-sidebar-bg: Canvas;
+    --pd-container-header-bg: Canvas;
+    --pd-container-content-bg: Canvas;
+    --pd-container-panel-bg: Canvas;
+    --pd-container-elevated-bg: Canvas;
+    --pd-container-sunken-bg: Canvas;
+
+    --pd-text-default: CanvasText;
+    --pd-text-muted: CanvasText;
+    --pd-text-subtle: CanvasText;
+    --pd-text-hint: GrayText;
+    --pd-text-disabled: GrayText;
+    --pd-text-on-primary: HighlightText;
+    --pd-text-link: LinkText;
+
+    --pd-border-separator: CanvasText;
+    --pd-border-emphasis: CanvasText;
+    --pd-border-overlay: CanvasText;
+    --pd-border-focus: Highlight;
+
+    --pd-control-bg: Canvas;
+    --pd-control-bg-hovered: Highlight;
+    --pd-control-bg-selected: Highlight;
+    --pd-control-border-default: ButtonText;
+    --pd-control-border-active: Highlight;
+    --pd-control-primary-bg: Highlight;
+    --pd-control-primary-bg-hovered: Highlight;
+    --pd-control-primary-text: HighlightText;
+    --pd-control-disabled-bg: Canvas;
+    --pd-control-disabled-border: GrayText;
+    --pd-control-disabled-text: GrayText;
+
+    --pd-primary: Highlight;
+    --pd-primary-subtle: Canvas;
+    --pd-primary-soft: Canvas;
+    --pd-primary-muted: Highlight;
+
+    --pd-feedback-info: CanvasText;
+    --pd-feedback-success: CanvasText;
+    --pd-feedback-warning: CanvasText;
+    --pd-feedback-danger: CanvasText;
+    --pd-feedback-info-subtle: Canvas;
+    --pd-feedback-success-subtle: Canvas;
+    --pd-feedback-warning-subtle: Canvas;
+    --pd-feedback-danger-subtle: Canvas;
+    --pd-feedback-info-muted: CanvasText;
+    --pd-feedback-success-muted: CanvasText;
+    --pd-feedback-warning-muted: CanvasText;
+    --pd-feedback-danger-muted: CanvasText;
+
+    --pd-overlay-bg: rgba(0, 0, 0, 0.5);
+    --pd-shadow-sm: none;
+    --pd-shadow-md: none;
+    --pd-shadow-lg: none;
+  }
+}

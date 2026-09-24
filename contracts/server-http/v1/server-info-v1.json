@@ -1,0 +1,15 @@
+{
+  "apiVersion": 1,
+  "serverVersion": "0.6.0-rc.1",
+  "features": [
+    "notifications",
+    "device_status_v1",
+    "device_scopes_v1",
+    "remote_gateway_v5",
+    "remote_runs_v2",
+    "remote_harness_control_v2",
+    "wechat_handoff_preflight_v1",
+    "result_pages_v1"
+  ],
+  "wechatProtocolReference": "2.4.6"
+}

@@ -1,0 +1,32 @@
+# Local development Relay: loopback only, no WeChat provider, no production
+# paths. Run `init` once then `serve`, both from the repository root. Copy and
+# adapt this file for anything that leaves your machine;
+# deploy/examples/config.notification-only.example.toml and
+# config.production.toml are the deployment shapes.
+[server]
+bind = "127.0.0.1:8080"
+exposure = "loopback"
+notification_only = true
+
+[admin]
+# Serves the read-only console API on 127.0.0.1:8081 for the Vite dev server at
+# http://127.0.0.1:5173, which is already the default allowed_origin. read_only
+# is the compiled default and the least-privilege mode: every read works, every
+# write answers 403 ADMIN_READ_ONLY. "operator" is an escalation, not a
+# hardening step -- see SECURITY.md.
+enabled = true
+mode = "read_only"
+
+[database]
+# .local/ and *.db are both git-ignored, so this stays out of the working tree.
+path = ".local/relay.db"
+
+[wechat]
+# Off: no provider, no credential file, no outbound notification. The relay
+# still accepts and persists events on /v1 and serves the read-only console.
+enabled = false
+connection_file = ".local/wechat-connection.enc"
+
+[logging]
+filter = "info,promptdock_server=info"
+format = "json"

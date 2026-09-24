@@ -1,0 +1,27 @@
+{
+  "generatedAt": 1735689600000,
+  "items": [
+    {
+      "acceptedAt": 1735689600000,
+      "bodyBytes": 1248,
+      "bodyPurgedAt": null,
+      "contentMode": "full_final",
+      "notificationAttemptCount": 0,
+      "notificationId": "result-notification-001",
+      "notificationLastErrorCode": null,
+      "notificationStatus": "pending_channel",
+      "ownerDeviceId": "00000000-0000-4000-8000-000000000001",
+      "pageExpiresAt": 1738281600000,
+      "pageState": "available",
+      "resultId": "result-001",
+      "resultRowId": "00000000-0000-4000-8000-000000000101",
+      "safeTitle": "Codex 最终回答",
+      "source": "codex_stop",
+      "sourceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "targetAccountFingerprint": "wx:123456789abc",
+      "updatedAt": 1735689600000
+    }
+  ],
+  "nextCursor": null,
+  "total": 1
+}

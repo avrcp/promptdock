@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "resultId": "contract-result-001",
+  "dedupeKey": "contract-result-dedupe-001",
+  "kind": "run_completed",
+  "contentMode": "full_final",
+  "source": "codex_stop",
+  "correlationKey": "contract-run-001",
+  "resultRevision": "1",
+  "title": "Codex 最终回答",
+  "body": "完整结果\r\n\r\n```rust\nfn main() { println!(\"🙂\"); }\n```\n尾部空白  \n",
+  "sourceHash": "1a75cf27f7696a8ef306e27d8dae4e314c438ca2eb4274c218c949b2447b9e1b",
+  "createdAt": 1800000000000,
+  "notificationExpiresAt": 1800000300000,
+  "startedAt": 1799999999000,
+  "completedAt": 1800000000000,
+  "durationMs": 1000
+}

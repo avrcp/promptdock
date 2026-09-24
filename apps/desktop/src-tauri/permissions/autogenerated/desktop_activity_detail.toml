@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-desktop-activity-detail"
+description = "Enables the desktop_activity_detail command without any pre-configured scope."
+commands.allow = ["desktop_activity_detail"]
+
+[[permission]]
+identifier = "deny-desktop-activity-detail"
+description = "Denies the desktop_activity_detail command without any pre-configured scope."
+commands.deny = ["desktop_activity_detail"]

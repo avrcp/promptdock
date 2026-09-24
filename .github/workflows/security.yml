@@ -1,0 +1,160 @@
+# Independent verification layers: the repo-wide hygiene gate, a third-party secret
+# history scanner, the dependency license policy, and whitespace.
+#
+# The layers here deliberately overlap. `scripts/oss/check-public-tree.mjs` knows the
+# shapes this repository has to refuse: credential signatures such as device token
+# prefixes, private-key blocks and bearer headers; personal-data shapes such as mobile
+# numbers, real mail domains and developer-machine paths; IPv4 literals that are
+# publicly routable rather than in a reserved or documentation range; and runtime data
+# files, credential stores and audit scaffolding posing as source. gitleaks knows
+# several thousand provider patterns this repo never heard of. A credential class that
+# is absent from both pattern sets is the residual risk, and it is the reason both run
+# on every change rather than one of them running occasionally. Neither layer carries an
+# environment-specific deny list: what a particular deployment names its hosts or
+# working directories is audited when that deployment is prepared, not in a public tree
+# that anyone can read.
+
+name: security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  public-tree:
+    name: Public-tree hygiene gate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+
+      # No dependency install: the gate is a zero-dependency script over
+      # scripts/oss/patterns.json, so it cannot be affected by a compromised
+      # dependency in the graph it is auditing.
+      - name: Scan every tracked file
+        run: node scripts/oss/check-public-tree.mjs
+
+      # The scan above passing is only meaningful if the scan can fail, so the same
+      # commit runs the gate against planted violations and a planted encoded pattern
+      # database in a temp directory.
+      - name: Prove the gate can still fail
+        run: node scripts/oss/selftest-check-public-tree.mjs
+
+  secret-history:
+    name: Secret history scan (gitleaks)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # A history scan needs the history; a shallow checkout would scan one
+          # commit and report success about something it never looked at.
+          fetch-depth: 0
+
+      - name: gitleaks
+        run: |
+          docker run --rm \
+            --volume "$PWD:/repo" \
+            ghcr.io/gitleaks/gitleaks:v8.23.3 \
+            detect \
+              --source /repo \
+              --config /repo/.gitleaks.toml \
+              --redact
+
+  dependency-licenses:
+    name: Dependency license policy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # No `cache: pnpm`: setup-node needs a pnpm binary to resolve the store
+          # path while it is still running, and that binary is only created by
+          # `corepack enable` below.
+          node-version-file: .node-version
+
+      - name: Enable corepack
+        run: corepack enable
+
+      # Pinned to the version deny.toml was written against: cargo-deny's config
+      # schema is not stable across majors, so a floating install could reject a
+      # valid file (or accept an invalid one). Built from the registry rather than
+      # downloaded, so CI does not have to trust a binary blob.
+      - name: Install cargo-deny
+        run: cargo install --locked cargo-deny@0.20.2
+
+      - name: Check the relay workspace
+        run: cargo deny check licenses bans sources
+
+      - name: Check the desktop crate
+        # Its own Cargo.lock; the shared config is passed explicitly because this
+        # graph is excluded from the root workspace.
+        run: >
+          cargo deny
+          --manifest-path apps/desktop/src-tauri/Cargo.toml
+          --config deny.toml
+          check licenses bans sources
+
+      - name: Check the pnpm graph
+        run: |
+          corepack pnpm@11.10.0 install --frozen-lockfile
+          node scripts/oss/check-license-policy.mjs
+
+  whitespace:
+    name: Whitespace
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # `git diff --check` with no revision compares the working tree to HEAD, which
+      # on CI is always clean, so it has to be pointed at the merge base to mean
+      # anything.
+      - name: No trailing whitespace or space-before-tab introduced
+        run: |
+          set -eu
+          empty_tree="$(git hash-object -t tree /dev/null)"
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            git fetch --no-tags origin "$GITHUB_BASE_REF"
+            base="$(git merge-base FETCH_HEAD HEAD)"
+            whole_tree=0
+          else
+            # `--verify --quiet` is required, not stylistic: plain `git rev-parse
+            # '<sha>^'` echoes the unresolvable argument to stdout when it fails, so
+            # a root commit used to yield a two-line base and a fatal exit 128.
+            if base="$(git rev-parse --verify --quiet "${GITHUB_SHA}^")"; then
+              whole_tree=0
+            else
+              base="$empty_tree"
+              whole_tree=1
+            fi
+          fi
+          echo "checking $base..$GITHUB_SHA (whole tree: $whole_tree)"
+          if [ "$whole_tree" = 1 ]; then
+            # An import commit has no parent, so the diff is the entire tree. Eight
+            # contract fixtures in contracts/node-link/v5 carry a trailing blank line
+            # that cannot be reformatted without re-pinning their SHA-256 digests,
+            # which CONTRIBUTING.md treats as a contract version bump. Every commit
+            # with a parent is checked without the exclusion, so a later edit to one
+            # of those files is still caught.
+            git diff --check "$base" "$GITHUB_SHA" -- . ':(exclude)contracts/node-link/v5'
+          else
+            git diff --check "$base" "$GITHUB_SHA"
+          fi

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "notificationId": "contract-notification-001",
+  "dedupeKey": "contract-dedupe-001",
+  "kind": "test",
+  "priority": 100,
+  "title": "Contract notification",
+  "body": "Stable rendered body",
+  "correlationKey": "contract-correlation-001",
+  "createdAt": 1800000000000,
+  "expiresAt": 1800000300000
+}

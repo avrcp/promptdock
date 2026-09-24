@@ -1,0 +1,37 @@
+[workspace]
+resolver = "3"
+members = [
+    "apps/server",
+    "crates/admin-api-contract",
+    "crates/relay-application",
+    "crates/relay-domain",
+    "crates/relay-provider-wechat",
+    "crates/relay-storage-sqlite",
+    "crates/relay-transport-gateway",
+    "crates/relay-transport-http",
+    "crates/wechat-ilink",
+]
+
+# The Tauri desktop crate is Windows-only and pins a different Rust edition
+# (2021) and version line than the relay server workspace. It builds standalone
+# via the root `pnpm tauri:build` script (which is
+# `pnpm --filter @promptdock/desktop tauri build`), or as `pnpm tauri build`
+# from apps/desktop/, never as a member of this workspace.
+exclude = [
+    "apps/desktop/src-tauri",
+]
+
+[workspace.package]
+version = "0.6.0-rc.1"
+edition = "2024"
+rust-version = "1.98.0"
+license = "Apache-2.0"
+repository = "https://github.com/avrcp/promptdock"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "debuginfo"

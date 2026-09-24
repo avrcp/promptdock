@@ -1,0 +1,66 @@
+{
+  "sourceSha": "968835997714baaff199cfed5f89a2c65d8ca77d",
+  "platform": "windows",
+  "cases": [
+    {
+      "id": "stop_windows_override_defaults_and_ignored_matcher",
+      "sourcePath": "C:\\fixture\\.codex\\hooks.json",
+      "eventName": "Stop",
+      "groupIndex": 2,
+      "handlerIndex": 1,
+      "matcher": "ignored-for-stop",
+      "handler": {
+        "type": "command",
+        "command": "sh -lc echo-posix",
+        "commandWindows": "cmd.exe /D /S /C echo windows"
+      }
+    },
+    {
+      "id": "permission_matcher_status_and_explicit_timeout",
+      "sourcePath": "C:\\fixture\\.codex\\hooks.json",
+      "eventName": "PermissionRequest",
+      "groupIndex": 0,
+      "handlerIndex": 0,
+      "matcher": "Bash|Edit",
+      "handler": {
+        "type": "command",
+        "command": "sh -lc approve",
+        "commandWindows": "approve.cmd",
+        "timeout": 8,
+        "async": false,
+        "statusMessage": "Waiting for approval",
+        "additionalContextLimit": 123
+      }
+    },
+    {
+      "id": "user_prompt_timeout_floor_default_context_limit_and_ignored_matcher",
+      "sourcePath": "C:\\fixture\\.codex\\hooks.json",
+      "eventName": "UserPromptSubmit",
+      "groupIndex": 1,
+      "handlerIndex": 3,
+      "matcher": "ignored-for-user-prompt",
+      "handler": {
+        "type": "command",
+        "command": "prompt-handler",
+        "timeout": 0,
+        "async": true,
+        "statusMessage": "Capturing prompt",
+        "additionalContextLimit": 2500
+      }
+    },
+    {
+      "id": "user_prompt_non_default_context_limit",
+      "sourcePath": "C:\\fixture\\.codex\\hooks.json",
+      "eventName": "UserPromptSubmit",
+      "groupIndex": 0,
+      "handlerIndex": 0,
+      "handler": {
+        "type": "command",
+        "command": "prompt-handler",
+        "timeout": 9,
+        "async": false,
+        "additionalContextLimit": 1200
+      }
+    }
+  ]
+}

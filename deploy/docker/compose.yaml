@@ -1,0 +1,148 @@
+services:
+  quality:
+    profiles: ["tools"]
+    platform: linux/amd64
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile
+      target: development
+      args:
+        UBUNTU_VERSION: "24.04"
+        RUST_VERSION: "1.98.0"
+        SOURCE_COMMIT: "${PROMPTDOCK_SOURCE_COMMIT:?PROMPTDOCK_SOURCE_COMMIT must be a full Git commit}"
+    command: ["bash", "scripts/quality/quality.sh"]
+    working_dir: /workspace
+    environment:
+      CARGO_TARGET_DIR: /home/promptdock/.cargo/target
+      # The source tree is intentionally copied without .git into the image.
+      # Release jobs override this with the exact candidate commit.
+      VITE_BUILD_COMMIT: "${PROMPTDOCK_SOURCE_COMMIT:?PROMPTDOCK_SOURCE_COMMIT must be a full Git commit}"
+      PROMPTDOCK_BUILD_SOURCE_ARCHIVE: "1"
+      # The non-root quality container defers the one root-only deployment
+      # principal test; docker-verify.ps1 runs it in a dedicated root container.
+      PROMPTDOCK_DEFER_ROOT_DEPLOY_TEST: "1"
+      # Bound test concurrency to the container's 64 MiB /tmp and 2 CPU budget;
+      # production runtime scheduling and authorization behavior are unchanged.
+      RUST_TEST_THREADS: "4"
+    init: true
+    cap_drop: ["ALL"]
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - type: volume
+        source: cargo-cache
+        target: /home/promptdock/.cargo
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+
+  relay:
+    platform: linux/amd64
+    image: promptdock-relay:dev
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile
+      target: runtime
+      args:
+        UBUNTU_VERSION: "24.04"
+        RUST_VERSION: "1.98.0"
+        SOURCE_COMMIT: "${PROMPTDOCK_SOURCE_COMMIT:?PROMPTDOCK_SOURCE_COMMIT must be a full Git commit}"
+    init: true
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt:
+      - no-new-privileges:true
+    cpus: 2.0
+    mem_limit: 2g
+    pids_limit: 256
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    volumes:
+      - type: volume
+        source: relay-data
+        target: /var/lib/promptdock-relay
+    ports:
+      - "127.0.0.1:${PROMPTDOCK_RELAY_PORT:-18080}:8080"
+      - "127.0.0.1:18443:8443"
+    stop_grace_period: 20s
+    restart: "no"
+
+  caddy-admin:
+    profiles: ["admin"]
+    platform: linux/amd64
+    image: promptdock-relay-admin:dev
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile
+      target: admin-caddy-runtime
+      args:
+        NODE_VERSION: "24.18.0"
+        BUILD_VERSION: "0.6.0-rc.1"
+        SOURCE_COMMIT: "${PROMPTDOCK_SOURCE_COMMIT:?PROMPTDOCK_SOURCE_COMMIT must be a full Git commit}"
+    network_mode: service:relay
+    depends_on:
+      relay:
+        condition: service_healthy
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      ADMIN_USER: "${PROMPTDOCK_ADMIN_USER:-operator}"
+      ADMIN_PASSWORD_HASH: "${PROMPTDOCK_ADMIN_PASSWORD_HASH:-}"
+    tmpfs:
+      - /config:rw,noexec,nosuid,size=8m
+      - /data:rw,noexec,nosuid,size=8m
+    restart: "no"
+
+  integration-verifier:
+    profiles: ["admin"]
+    image: curlimages/curl:8.12.1
+    network_mode: service:relay
+    depends_on:
+      caddy-admin:
+        condition: service_started
+    command: ["--fail", "--silent", "--show-error", "http://127.0.0.1:8080/health/ready"]
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt:
+      - no-new-privileges:true
+    restart: "no"
+
+  relay-wechat:
+    profiles: ["wechat-bootstrap"]
+    platform: linux/amd64
+    image: promptdock-relay:dev
+    init: true
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt:
+      - no-new-privileges:true
+    cpus: 2.0
+    mem_limit: 2g
+    pids_limit: 256
+    environment:
+      CREDENTIALS_DIRECTORY: /run/credentials
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    volumes:
+      - type: volume
+        source: relay-data
+        target: /var/lib/promptdock-relay
+      - type: volume
+        source: relay-credential
+        target: /run/credentials
+        read_only: true
+      - type: bind
+        source: ./relay-wechat.toml
+        target: /etc/promptdock-relay/wechat.toml
+        read_only: true
+    ports:
+      - "127.0.0.1:${PROMPTDOCK_RELAY_WECHAT_PORT:-18081}:8080"
+    stop_grace_period: 20s
+    restart: "no"
+    command: ["serve", "--config", "/etc/promptdock-relay/wechat.toml"]
+
+volumes:
+  cargo-cache:
+  relay-data:
+  relay-credential:

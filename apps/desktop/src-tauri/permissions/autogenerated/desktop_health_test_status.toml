@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-desktop-health-test-status"
+description = "Enables the desktop_health_test_status command without any pre-configured scope."
+commands.allow = ["desktop_health_test_status"]
+
+[[permission]]
+identifier = "deny-desktop-health-test-status"
+description = "Denies the desktop_health_test_status command without any pre-configured scope."
+commands.deny = ["desktop_health_test_status"]

@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-desktop-relay-test"
+description = "Enables the desktop_relay_test command without any pre-configured scope."
+commands.allow = ["desktop_relay_test"]
+
+[[permission]]
+identifier = "deny-desktop-relay-test"
+description = "Denies the desktop_relay_test command without any pre-configured scope."
+commands.deny = ["desktop_relay_test"]

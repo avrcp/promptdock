@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": 1787652000000,
+  "adminApiVersion": 2,
+  "relayVersion": "0.6.0-rc.1",
+  "capabilities": [
+    "admin_read_v2",
+    "admin_wechat_status_v2"
+  ]
+}

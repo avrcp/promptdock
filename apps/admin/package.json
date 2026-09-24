@@ -1,0 +1,61 @@
+{
+  "name": "@promptdock/relay-admin",
+  "version": "0.0.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "type": "module",
+  "description": "PromptDock Relay Admin - restricted same-origin Relay operator console",
+  "engines": {
+    "node": ">=24.18.0 <25"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:dev": "playwright test --config playwright.dev.config.ts",
+    "test:e2e:integration": "node scripts/build-production.mjs && playwright test --config playwright.integration.config.ts",
+    "build:production": "node scripts/build-production.mjs",
+    "quality": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm design:check && pnpm test && pnpm build",
+    "design:check": "vitest run src/design-system/design-token-guard.test.ts",
+    "security:check": "node scripts/no-secrets.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/geist": "5.3.0",
+    "@fontsource-variable/jetbrains-mono": "5.3.0",
+    "@promptdock/relay-admin-api-generated": "workspace:*",
+    "lucide-vue-next": "0.469.0",
+    "qrcode": "1.5.4",
+    "vue": "3.5.13",
+    "vue-router": "4.5.0",
+    "zod": "3.24.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.10.1",
+    "@eslint/js": "9.17.0",
+    "@playwright/test": "1.49.1",
+    "@tsconfig/node22": "22.0.0",
+    "@types/node": "22.10.5",
+    "@types/qrcode": "1.5.5",
+    "@vitejs/plugin-vue": "5.2.1",
+    "@vue/test-utils": "2.4.6",
+    "@vue/tsconfig": "0.7.0",
+    "eslint": "9.17.0",
+    "eslint-plugin-vue": "9.32.0",
+    "globals": "15.14.0",
+    "jiti": "2.4.2",
+    "jsdom": "25.0.1",
+    "prettier": "3.4.2",
+    "typescript": "5.7.2",
+    "typescript-eslint": "8.19.0",
+    "vite": "6.0.7",
+    "vitest": "2.1.8",
+    "vue-tsc": "2.2.0"
+  }
+}

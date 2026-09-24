@@ -1,0 +1,6 @@
+{
+  "items": [{ "id": "inbound_0123456789abcdef", "command": "list_recent", "senderHint": "wx:0123…cdef", "state": "reply_queued", "attemptCount": 1, "errorCode": null, "createdAt": 1787651900000, "expiresAt": 1787652500000, "updatedAt": 1787651990000 }],
+  "nextCursor": null,
+  "total": null,
+  "generatedAt": 1787652000000
+}

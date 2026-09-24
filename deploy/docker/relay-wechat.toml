@@ -1,0 +1,25 @@
+[server]
+bind = "0.0.0.0:8080"
+exposure = "container"
+request_body_limit_bytes = 65536
+route_timeout_seconds = 10
+shutdown_timeout_seconds = 15
+
+[database]
+path = "/var/lib/promptdock-relay/relay.db"
+max_connections = 4
+busy_timeout_ms = 5000
+
+[wechat]
+enabled = true
+connection_file = "/var/lib/promptdock-relay/wechat-connection.enc"
+
+[retention]
+accepted_days = 30
+dead_letter_days = 90
+inbound_terminal_days = 7
+inbound_expired_days = 2
+
+[logging]
+filter = "info,promptdock_server=info"
+format = "json"

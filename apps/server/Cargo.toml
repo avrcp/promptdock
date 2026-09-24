@@ -1,0 +1,89 @@
+[package]
+name = "promptdock-server"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+license.workspace = true
+publish = false
+
+[[bin]]
+name = "promptdock-relay"
+path = "src/main.rs"
+
+[lints]
+workspace = true
+
+[dependencies]
+relay-admin-api = { path = "../../crates/admin-api-contract" }
+async-trait = "0.1"
+ammonia = "4.1"
+axum = { version = "0.8", default-features = false, features = [
+    "http1",
+    "json",
+    "matched-path",
+    "query",
+    "tokio",
+    "tower-log",
+    "tracing",
+    "ws",
+] }
+base64 = "0.22"
+blake3 = "1"
+chacha20poly1305 = "0.10"
+chrono = { version = "0.4", default-features = false, features = ["std"] }
+clap = { version = "4", features = ["derive"] }
+rand = "0.9"
+pulldown-cmark = "0.13"
+relay-application = { path = "../../crates/relay-application" }
+relay-domain = { path = "../../crates/relay-domain" }
+relay-provider-wechat = { path = "../../crates/relay-provider-wechat" }
+relay-storage-sqlite = { path = "../../crates/relay-storage-sqlite" }
+relay-transport-gateway = { path = "../../crates/relay-transport-gateway" }
+relay-transport-http = { path = "../../crates/relay-transport-http" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+sqlx = { version = "0.9", default-features = false, features = [
+    "chrono",
+    "macros",
+    "migrate",
+    "runtime-tokio",
+    "sqlite",
+    "uuid",
+] }
+subtle = "2"
+thiserror = "2"
+tokio = { version = "1", features = [
+    "fs",
+    "macros",
+    "net",
+    "rt-multi-thread",
+    "signal",
+    "sync",
+    "time",
+] }
+tokio-util = { version = "0.7", features = ["rt"] }
+toml = "0.9"
+tower-http = { version = "0.6", features = [
+    "catch-panic",
+    "limit",
+    "set-header",
+    "timeout",
+    "trace",
+] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+uuid = { version = "1", features = ["v4"] }
+url = "2"
+zeroize = { version = "1", features = ["derive"] }
+
+[target.'cfg(unix)'.dependencies]
+rustix = { version = "1", features = ["fs", "process"] }
+
+[dev-dependencies]
+futures-util = "0.3"
+tempfile = "3"
+tokio = { version = "1", features = ["io-util", "test-util"] }
+tower = { version = "0.5", features = ["util"] }
+tokio-tungstenite = "0.29"

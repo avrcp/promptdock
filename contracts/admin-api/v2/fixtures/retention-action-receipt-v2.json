@@ -1,0 +1,9 @@
+{
+  "receiptId": "00000000-0000-4000-8000-000000000000",
+  "action": "maintenance.retention",
+  "outboxDeleted": 0,
+  "inboundDeleted": 0,
+  "selectionDeleted": 0,
+  "startedAt": 1787652000000,
+  "completedAt": 1787652000000
+}

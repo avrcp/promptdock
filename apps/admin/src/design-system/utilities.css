@@ -1,0 +1,80 @@
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.mono,
+.pd-code {
+  font-family: var(--pd-font-code);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.align-end {
+  text-align: end;
+}
+
+.break-anywhere {
+  overflow-wrap: anywhere;
+}
+
+.truncate {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pd-space-8);
+}
+
+.stack {
+  display: grid;
+  gap: var(--pd-space-12);
+}
+
+.muted {
+  color: var(--pd-text-subtle);
+}
+
+.pd-text-ui {
+  font-size: var(--pd-font-size-14);
+  line-height: var(--pd-line-height-ui);
+}
+
+.pd-text-meta {
+  color: var(--pd-text-muted);
+  font-size: var(--pd-font-size-12);
+  line-height: var(--pd-line-height-metadata);
+  letter-spacing: var(--pd-letter-spacing-wide);
+}
+
+.pd-title-page {
+  font-size: var(--pd-font-size-24);
+  font-weight: var(--pd-font-weight-semibold);
+  line-height: var(--pd-line-height-compact);
+}
+
+.pd-title-panel {
+  font-size: var(--pd-font-size-16);
+  font-weight: var(--pd-font-weight-semibold);
+  line-height: var(--pd-line-height-metadata);
+}
+
+.pd-focus-ring:focus-visible {
+  outline: 2px solid var(--pd-border-focus);
+  outline-offset: 2px;
+}

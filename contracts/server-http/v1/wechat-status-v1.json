@@ -1,0 +1,10 @@
+{
+  "state": "disconnected",
+  "accountFingerprint": null,
+  "lastPollAt": null,
+  "lastContextAt": null,
+  "lastProviderAcceptedAt": 1800000000100,
+  "pendingNotifications": 0,
+  "blockedNotifications": 0,
+  "lastErrorCode": null
+}

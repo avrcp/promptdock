@@ -1,0 +1,26 @@
+{
+  "type": "response",
+  "requestId": "00000000-0000-4000-8000-000000000004",
+  "generation": 3,
+  "result": {
+    "kind": "list_runs",
+    "items": [
+      {
+        "runHandle": "run_8f5d8b82c9124e12b7d9aabbccdd",
+        "title": "Admin 质量整改",
+        "runtimeLabel": "Codex",
+        "workspaceLabel": "Relay Admin",
+        "desiredState": "running",
+        "phase": "active",
+        "outcome": "none",
+        "conditions": ["accepted", "running"],
+        "attentionCount": 0,
+        "childCount": 6,
+        "activeChildCount": 4,
+        "startedAt": 1787800000000,
+        "updatedAt": 1787801000000
+      }
+    ],
+    "nextCursor": null
+  }
+}

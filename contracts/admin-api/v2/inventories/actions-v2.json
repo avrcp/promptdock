@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 2,
+  "deviceCredentialActions": ["create", "rotate"],
+  "deviceActions": ["device.enable", "device.disable", "device.revoke"],
+  "inboundCommands": [
+    "help",
+    "list_devices",
+    "list_jobs",
+    "list_recent",
+    "list_failed",
+    "next_page",
+    "get_status",
+    "get_detail",
+    "get_tree",
+    "unknown"
+  ],
+  "maintenanceActions": ["maintenance.retention"],
+  "wechatActions": ["wechat.disconnect"]
+}

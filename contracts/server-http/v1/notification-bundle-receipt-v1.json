@@ -1,0 +1,9 @@
+{
+  "bundleId": "contract-bundle-001",
+  "acceptedAt": 1800000000000,
+  "status": "queued",
+  "segmentCount": 1,
+  "acceptedSegments": 0,
+  "sourceHash": "13171d30b4abed191d15df15174609d2c3a8ff676a1bea3f74088fc6774b981a",
+  "updatedAt": 1800000000000
+}

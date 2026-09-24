@@ -1,0 +1,33 @@
+{
+  "type": "response",
+  "requestId": "00000000-0000-4000-8000-000000000008",
+  "generation": 3,
+  "result": {
+    "kind": "get_run_tree",
+    "root": {
+      "runHandle": "run_11223344556647889900aabbccdd",
+      "label": "Coordinator",
+      "desiredState": "running",
+      "phase": "active",
+      "outcome": "none",
+      "conditions": ["accepted", "running"],
+      "attentionCount": 0,
+      "childCount": 1,
+      "activeChildCount": 0,
+      "children": [
+        {
+          "runHandle": "run_ffeeddccbbaa40998877aabbccdd",
+          "label": "Reviewer",
+          "desiredState": "running",
+          "phase": "finished",
+          "outcome": "succeeded",
+          "conditions": ["accepted", "terminal_observed"],
+          "attentionCount": 0,
+          "childCount": 0,
+          "activeChildCount": 0,
+          "children": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "actions": [
+    "help",
+    "list_devices",
+    "list_jobs",
+    "list_recent",
+    "list_failed",
+    "next_page",
+    "get_status",
+    "get_detail",
+    "get_tree",
+    "unknown"
+  ]
+}

@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-desktop-hook-health"
+description = "Enables the desktop_hook_health command without any pre-configured scope."
+commands.allow = ["desktop_hook_health"]
+
+[[permission]]
+identifier = "deny-desktop-hook-health"
+description = "Denies the desktop_hook_health command without any pre-configured scope."
+commands.deny = ["desktop_hook_health"]

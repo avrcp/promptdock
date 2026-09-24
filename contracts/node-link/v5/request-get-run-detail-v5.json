@@ -1,0 +1,11 @@
+{
+  "type": "request",
+  "requestId": "00000000-0000-4000-8000-000000000007",
+  "generation": 3,
+  "issuedAt": 1800000000000,
+  "expiresAt": 1800000030000,
+  "action": {
+    "kind": "get_run_detail",
+    "runHandle": "run_8f5d8b82c9124e12b7d9aabbccdd"
+  }
+}
